@@ -20,8 +20,11 @@ public class Argumentos {
                 throw new IllegalArgumentException("Argumento " + parametro + " sem valor");
             }
 
-            map.put(args[i].substring(2), args[i + 1]);
-        }
+            String nome = parametro.substring(2);
+            if (map.containsKey(nome)) {
+                throw new IllegalArgumentException("Argumento " + parametro + " repetido");
+            }
+            map.put(nome, args[i + 1]);        }
     }
 
 
