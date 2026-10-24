@@ -15,6 +15,13 @@ public final class Config {
     public static final long CALIBRACAO_ITERACOES_MEDICAO = 100_000_000L;
 
     public static final long CALIBRACAO_CONFIRMACAO_NS = 1_000_000_000L;
-    
+
+
+    public static final int TAREFA_FRACAO_LONGAS = 10;
+    //longa 10x maior que a curta
+    public static final int TAREFA_FATOR_LONGA = 10;
+    // 0,9 × c + 0,1 × 10c = m
+    public static final double TAREFA_DIVISOR_CURTA = 1.9;
+
     private Config() {}
 }
