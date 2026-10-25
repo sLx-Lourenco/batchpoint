@@ -1,16 +1,11 @@
 package pt.ulisboa.batchpoint.coordenador;
 import java.util.Arrays;
-import java.util.List;
-
 import pt.ulisboa.batchpoint.comum.Quadro;
 import pt.ulisboa.batchpoint.protocolo.Tarefa;
 
 
 
 public final class Distribuidor {
-    
-    
-    public record Entrega(Repeticao rep, List<Tarefa> listaTarefas) {}
 
 
     private final int maxLote;
