@@ -23,5 +23,10 @@ public final class Config {
     // 0,9 × c + 0,1 × 10c = m
     public static final double TAREFA_DIVISOR_CURTA = 1.9;
 
+    public static final int SERVER_PORTA_POR_OMISSAO = 9000;
+
+    public static final int PINGPONG_AQUECIMENTO_OMISSAO = 1000;
+    public static final int PINGPONG_MEDIDAS_OMISSAO = 10_000;
+    
     private Config() {}
 }
