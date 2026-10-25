@@ -63,6 +63,13 @@ public final class Config {
     // ---------- ligação do nó ao coordenador ----------
     public static final long NO_INTERVALO_TENTATIVAS_MS = 200;
     public static final int NO_MAX_TENTATIVAS = 150;   // 150 × 200 ms = 30 s
+
+    // ---------- registo dos resultados ----------
+    public static final String ARG_CATEGORIA = "categoria";
+    public static final String ARG_NOME = "nome";
+    public static final String REGISTO_CATEGORIA_POR_OMISSAO = "testes";
+    public static final String REGISTO_NOME_POR_OMISSAO = "";
+    public static final String REGISTO_PASTA_POR_OMISSAO = "data";
     
     private Config() {}
 }

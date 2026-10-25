@@ -1,6 +1,7 @@
 package pt.ulisboa.batchpoint.coordenador;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import pt.ulisboa.batchpoint.comum.Config;
 import pt.ulisboa.batchpoint.comum.Politica;
 import pt.ulisboa.batchpoint.protocolo.Canal;
 import pt.ulisboa.batchpoint.protocolo.Tarefa;
+import pt.ulisboa.batchpoint.registo.Configuracao;
+import pt.ulisboa.batchpoint.registo.RegistoJson;
 
 
 public class Coordenador {
@@ -32,6 +35,12 @@ public class Coordenador {
         int repeticoes = a.inteiro(Config.ARG_REPETICOES, Config.COORD_REPETICOES_POR_OMISSAO);
         boolean verificar = a.texto(Config.ARG_VERIFICAR, Config.COORD_VERIFICAR_POR_OMISSAO).equals("y");
     
+        //para os registos data
+        String categoria = a.texto(Config.ARG_CATEGORIA, Config.REGISTO_CATEGORIA_POR_OMISSAO);
+        String nome = a.texto(Config.ARG_NOME, Config.REGISTO_NOME_POR_OMISSAO);
+
+
+
         if(politica == Politica.PLANA && lote != 1){
             throw new IllegalArgumentException("Politica plana tem de ter 1 lote");
         }
@@ -43,6 +52,15 @@ public class Coordenador {
 
         // Fica a null quando não se verifica.
         Long esperado = verificar ? checksumSequencial(FabricaCargas.criar(nomeCarga), tarefas) : null;
+        
+        //registos
+        Configuracao config = new Configuracao(politica, nomeCarga, lote, desequilibrio, tarefas.length, 
+            iteracoes, ligacoes, aquecimento, repeticoes);
+
+        RegistoJson registo = new RegistoJson(Path.of(Config.REGISTO_PASTA_POR_OMISSAO),
+            categoria, nome, config, String.join(" ", args));
+
+        
 
         Distribuidor dist = new Distribuidor(lote);
         
@@ -89,6 +107,13 @@ public class Coordenador {
             }
 
             boolean medida = i >= aquecimento;
+
+            //registp
+            if (medida) {
+                registo.escrever(i - aquecimento, fim, repeticao.mensagens.get(),
+                        repeticao.bytesEnviados.get(), repeticao.somaDuracaoNs.get());
+            }
+
             System.out.printf("%s %s %3d: %10.3f ms, %d mensagens%n",
                     politica.tipo(), medida ? "medida" : "aquec", i, fim / 1e6, repeticao.mensagens.get());
 
@@ -102,8 +127,7 @@ public class Coordenador {
             t.join();
         }
 
-
-
+        System.out.println("Guardado em " + registo.ficheiro());
     }
 
 
