@@ -27,6 +27,42 @@ public final class Config {
 
     public static final int PINGPONG_AQUECIMENTO_OMISSAO = 1000;
     public static final int PINGPONG_MEDIDAS_OMISSAO = 10_000;
+
+
+
+
+    // ---------- nomes dos argumentos (o que vem depois de --) ----------
+    public static final String ARG_POLITICA = "politica";
+    public static final String ARG_LOTE = "lote";
+    public static final String ARG_PORTA = "porta";
+    public static final String ARG_LIGACOES = "ligacoes";
+    public static final String ARG_CARGA = "carga";
+    public static final String ARG_TAREFAS = "tarefas";
+    public static final String ARG_ITERACOES = "iteracoes";
+    public static final String ARG_DESEQUILIBRIO = "desequilibrio";
+    public static final String ARG_AQUECIMENTO = "aquecimento";
+    public static final String ARG_REPETICOES = "repeticoes";
+    public static final String ARG_VERIFICAR = "verificar";
+    public static final String ARG_MODO = "modo";
+    public static final String ARG_ID = "id";
+    public static final String ARG_THREADS = "threads";
+    public static final String ARG_COORDENADOR = "coordenador";
+    public static final String ARG_SERVIDOR = "servidor";
+    public static final String ARG_MEDIDAS = "medidas";
+
+    // ---------- omissões do coordenador ----------
+    public static final int COORD_LIGACOES_POR_OMISSAO = 6;
+    public static final String COORD_CARGA_POR_OMISSAO = "sintetica";
+    public static final int COORD_TAREFAS_POR_OMISSAO = 1000;
+    public static final String COORD_DESEQUILIBRIO_POR_OMISSAO = "uniforme";
+    public static final int COORD_AQUECIMENTO_POR_OMISSAO = 5;
+    public static final int COORD_REPETICOES_POR_OMISSAO = 30;
+    public static final String COORD_VERIFICAR_POR_OMISSAO = "n";
+    public static final long COORD_SEMENTE = 42L;
+
+    // ---------- ligação do nó ao coordenador ----------
+    public static final long NO_INTERVALO_TENTATIVAS_MS = 200;
+    public static final int NO_MAX_TENTATIVAS = 150;   // 150 × 200 ms = 30 s
     
     private Config() {}
 }
