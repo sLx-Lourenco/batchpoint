@@ -1,4 +1,4 @@
-package pt.ulisboa.batchpoint.no;
+package pt.ulisboa.batchpoint.no.plano;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.ulisboa.batchpoint.cargas.Carga;
+import pt.ulisboa.batchpoint.no.AgenteNo;
 import pt.ulisboa.batchpoint.protocolo.Canal;
 import pt.ulisboa.batchpoint.protocolo.Protocolo;
 import pt.ulisboa.batchpoint.protocolo.Resultado;
@@ -16,7 +17,7 @@ public final class NoPlano {
     
     private NoPlano(){}
 
-    static void correr(InetSocketAddress coordenador, int id, int threads, Carga carga) throws InterruptedException{
+    public static void correr(InetSocketAddress coordenador, int id, int threads, Carga carga) throws InterruptedException{
 
         List<Thread> listaThreads = new ArrayList<Thread>(); 
 

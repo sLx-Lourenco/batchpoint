@@ -34,11 +34,13 @@ SLICE=batchpoint.slice      # slice com os cores 0-5 (ver setup_torre.md)
 # A carga e a porta têm de ser as mesmas no coordenador e nos nós: procura-as nos argumentos.
 CARGA=sintetica
 PORTA=9000
+LOTE=1
 ARGS=("$@")
 for ((i = 0; i < ${#ARGS[@]} - 1; i++)); do
     case "${ARGS[$i]}" in
         --carga) CARGA="${ARGS[$((i + 1))]}" ;;
         --porta) PORTA="${ARGS[$((i + 1))]}" ;;
+        --lote)  LOTE="${ARGS[$((i + 1))]}" ;;
     esac
 done
 
@@ -70,7 +72,7 @@ for i in $(seq 1 $NOS); do
     CORES="$C-$(( C + THREADS - 1 ))"
     ssh "$TORRE" "docker run -d --name no$i \
         --cgroup-parent=$SLICE --cpuset-cpus $CORES --network host \
-        $IMAGEM --modo $POLITICA --id $i --threads $THREADS --carga $CARGA \
+        $IMAGEM --modo $POLITICA --id $i --threads $THREADS --carga $CARGA --lote $LOTE \
         --coordenador $COORD_IP:$PORTA > /dev/null"
 done
 

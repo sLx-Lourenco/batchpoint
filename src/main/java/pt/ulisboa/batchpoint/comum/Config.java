@@ -59,6 +59,8 @@ public final class Config {
     public static final int COORD_REPETICOES_POR_OMISSAO = 30;
     public static final String COORD_VERIFICAR_POR_OMISSAO = "n";
     public static final long COORD_SEMENTE = 42L;
+    public static final int COORD_LOTE_POR_OMISSAO = 1;
+
 
     // ---------- ligação do nó ao coordenador ----------
     public static final long NO_INTERVALO_TENTATIVAS_MS = 200;

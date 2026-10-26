@@ -10,6 +10,8 @@ import pt.ulisboa.batchpoint.cargas.FabricaCargas;
 import pt.ulisboa.batchpoint.comum.Argumentos;
 import pt.ulisboa.batchpoint.comum.Config;
 import pt.ulisboa.batchpoint.comum.Politica;
+import pt.ulisboa.batchpoint.no.hierarquico.NoHierarquico;
+import pt.ulisboa.batchpoint.no.plano.NoPlano;
 
 public class AgenteNo {
 
@@ -29,6 +31,8 @@ public class AgenteNo {
 
         Carga cargasCriadas = FabricaCargas.criar(carga);
 
+        int lote = a.inteiro(Config.ARG_LOTE, Config.COORD_LOTE_POR_OMISSAO);
+
         System.out.print(modo + " : " + id + " : " + threads +" : "+ coordenador.getHostString() + ":" + coordenador.getPort() + "\n");
 
 
@@ -39,6 +43,12 @@ public class AgenteNo {
                 NoPlano.correr(coordenador, id, threads, cargasCriadas);
             }
 
+            case HIERARQUICA -> {
+                NoHierarquico.correr(coordenador, id, threads, lote, cargasCriadas);
+            }
+
+
+
             default -> throw new IllegalArgumentException("Politica nao aceite: " + modo);
 
 
@@ -46,7 +56,7 @@ public class AgenteNo {
 
     }
 
-    static Socket ligar(InetSocketAddress coordenador) throws IOException, InterruptedException{
+    public static Socket ligar(InetSocketAddress coordenador) throws IOException, InterruptedException{
         int cont = 0;
 
         while(true){
