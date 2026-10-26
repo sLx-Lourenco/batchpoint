@@ -1,0 +1,25 @@
+{
+  "data": "2026-10-26T09:08:44",
+  "comando": "--politica plana --ligacoes 6 --nome cabo --tarefas 20000 --iteracoes 5972 --desequilibrio baralhada --aquecimento 2 --repeticoes 3 --verificar y",
+  "configuracao": {
+    "politica": "plana",
+    "carga": "sintetica",
+    "lote": 1,
+    "desequilibrio": "baralhada",
+    "tarefas": 20000,
+    "parametro": 5972,
+    "ligacoes": 6,
+    "aquecimento": 2,
+    "repeticoes_pedidas": 3
+  },
+  "ambiente": {
+    "coordenador": "slx-IdeaPad",
+    "java": "21.0.12.1",
+    "sistema": "Linux 7.0.0-38-generic"
+  },
+  "repeticoes": [
+    {"repeticao": 0, "tempo_ns": 1044637077, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 202680394},
+    {"repeticao": 1, "tempo_ns": 991534647, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 202702218},
+    {"repeticao": 2, "tempo_ns": 994623295, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 202138360}
+  ]
+}
