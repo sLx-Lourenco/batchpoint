@@ -77,14 +77,34 @@ public final class RegistoJson {
     }
 
     /** Acrescenta uma repetição medida e regrava o ficheiro. */
-    public void escrever(int repeticao, long tempoNs, long mensagens, long bytesEnviados, long somaDuracoesNs)
-            throws IOException {
+        /** Acrescenta uma repetição medida e regrava o ficheiro. */
+    public void escrever(int repeticao, long tempoNs, long mensagens, long bytesEnviados, long somaDuracoesNs,
+            long[] ocupadoNs, long[] paradoNs, double eficiencia, double temperatura) throws IOException {
         repeticoes.add("    {\"repeticao\": " + repeticao
                 + ", \"tempo_ns\": " + tempoNs
                 + ", \"mensagens\": " + mensagens
                 + ", \"bytes_enviados\": " + bytesEnviados
-                + ", \"soma_duracoes_ns\": " + somaDuracoesNs + "}");
+                + ", \"soma_duracoes_ns\": " + somaDuracoesNs
+                + ", \"eficiencia\": " + numero(eficiencia)
+                + ", \"temperatura_c\": " + numero(temperatura)
+                + ", \"ocupado_ns\": " + lista(ocupadoNs)
+                + ", \"parado_ns\": " + lista(paradoNs) + "}");
         gravar();
+    }
+
+    /** Um array de longs em JSON: [1, 2, 3]. */
+    static String lista(long[] valores) {
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < valores.length; i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(valores[i]);
+        }
+        return sb.append("]").toString();
+    }
+
+    /** Um double em JSON; NaN (não medido) passa a null, porque o JSON não aceita NaN. */
+    static String numero(double v) {
+        return Double.isNaN(v) ? "null" : String.valueOf(v);
     }
 
     /** Onde o ficheiro está a ser gravado. */

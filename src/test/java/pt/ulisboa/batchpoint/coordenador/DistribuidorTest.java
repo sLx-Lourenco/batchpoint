@@ -21,7 +21,7 @@ import pt.ulisboa.batchpoint.protocolo.Tarefa;
 class DistribuidorTest {
 
     private static Repeticao repeticao(int n) {
-        return new Repeticao(GeradorDeTarefas.gerar(n, 10, "uniforme", 42));
+        return new Repeticao(GeradorDeTarefas.gerar(n, 10, "uniforme", 42), 1);
     }
 
     private static List<Integer> ids(Entrega e) {

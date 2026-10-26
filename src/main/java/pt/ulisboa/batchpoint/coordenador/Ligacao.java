@@ -11,10 +11,13 @@ public final class Ligacao implements  Runnable{
 
     private final Canal canal;
     private final Distribuidor distribuidor;
+    private final int indice;          // posicao desta ligacao no ocupadoPorLigacao
+    private volatile int threads;      // threads do no lidas no HELLO
 
-    Ligacao(Canal canal, Distribuidor distribuidor){
+    Ligacao(Canal canal, Distribuidor distribuidor, int indice){
         this.canal = canal;
         this.distribuidor=distribuidor;
+        this.indice=indice;
     }
 
     @Override 
@@ -29,7 +32,7 @@ public final class Ligacao implements  Runnable{
             }
 
             int id = canal.lerInt();
-            int threads = canal.lerInt();
+            threads = canal.lerInt();
 
             System.out.println("No " + id + " ligado (" + threads +" threads)");
 
@@ -68,6 +71,7 @@ public final class Ligacao implements  Runnable{
                             //podia usar soma mas vou usar XOR so pk e habitual em mpressoes digitais
                             repeticao.checkSum.accumulateAndGet(r.valor(), (a, b) -> a ^ b);
                             repeticao.somaDuracaoNs.addAndGet(r.duracaoNs());
+                            repeticao.ocupadoPorLigacao.addAndGet(indice, r.duracaoNs());// metricas
                             repeticao.cDownLatch.countDown();
                         }
                         
@@ -84,4 +88,9 @@ public final class Ligacao implements  Runnable{
 
         }catch(IOException | InterruptedException e){ throw new  RuntimeException(e);}
     }
+
+    int threads() {
+        return threads;
+    }
+
 }

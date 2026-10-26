@@ -1,4 +1,5 @@
 package pt.ulisboa.batchpoint.coordenador;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Path;
@@ -40,7 +41,7 @@ public class Coordenador {
         String categoria = a.texto(Config.ARG_CATEGORIA, Config.REGISTO_CATEGORIA_POR_OMISSAO);
         String nome = a.texto(Config.ARG_NOME, Config.REGISTO_NOME_POR_OMISSAO);
 
-
+        String sensor = a.texto(Config.ARG_SENSOR, Config.COORD_SENSOR_POR_OMISSAO);
 
         if(politica == Politica.PLANA && lote != 1){
             throw new IllegalArgumentException("Politica plana tem de ter 1 lote");
@@ -88,6 +89,7 @@ public class Coordenador {
         
 
         List<Thread> threads = new ArrayList<>();
+        List<Ligacao> listaLigacoes = new ArrayList<>(); 
 
         try (ServerSocket serverSocket = new ServerSocket(porta)){
             System.out.println("A espera de " +ligacoes + " ligacoess na porta " + porta);
@@ -97,7 +99,8 @@ public class Coordenador {
                 Socket socket = serverSocket.accept();
 
                 Canal canal = new Canal(socket);
-                Ligacao ligacao = new Ligacao(canal, dist);
+                Ligacao ligacao = new Ligacao(canal, dist,i);
+                listaLigacoes.add(ligacao);
 
                 Thread t = new  Thread(ligacao);
                 t.start();  
@@ -112,13 +115,15 @@ public class Coordenador {
 
         for(int i =0; i< aquecimento+repeticoes; i++){
 
-            Repeticao repeticao = new Repeticao(tarefas);
+            Repeticao repeticao = new Repeticao(tarefas, ligacoes);
 
             long inicio = System.nanoTime();
             dist.publicar(repeticao);
             repeticao.cDownLatch.await();
             long fim = System.nanoTime() - inicio;
             
+            double temperatura = lerTemperatura(sensor);
+
             if(!repeticao.completa()){
                 throw new IllegalStateException("Ha tarefas perdidas ou repetidas");
             }
@@ -130,15 +135,38 @@ public class Coordenador {
 
             boolean medida = i >= aquecimento;
 
+
+            // tempo ocupado e parado de cada ligação nesta repetição
+            long[] ocupado = new long[ligacoes];
+            long[] parado = new long[ligacoes];
+            long ocupadoTotal = 0;
+            int threadsTotal = 0;
+
+            for (int l = 0; l < ligacoes; l++) {
+                //na plana cada ligacao e uma thread na hierarquica e um no inteiro
+                int threadsLigacao = (politica == Politica.PLANA) ? 1 : listaLigacoes.get(l).threads();
+                ocupado[l] = repeticao.ocupadoPorLigacao.get(l);
+                parado[l] = threadsLigacao * fim - ocupado[l];
+                ocupadoTotal += ocupado[l];
+                threadsTotal += threadsLigacao;
+            }
+            double eficiencia = (double) ocupadoTotal / ((double) threadsTotal * fim);
+
+            //-------
+
+
+
+
             //registp
             if (medida) {
                 registo.escrever(i - aquecimento, fim, repeticao.mensagens.get(),
-                        repeticao.bytesEnviados.get(), repeticao.somaDuracaoNs.get());
+                    repeticao.bytesEnviados.get(), repeticao.somaDuracaoNs.get(),
+                    ocupado, parado, eficiencia, temperatura);
             }
 
-            System.out.printf("%s %s %3d: %10.3f ms, %d mensagens%n",
-                    politica.tipo(), medida ? "medida" : "aquec", i, fim / 1e6, repeticao.mensagens.get());
-
+            System.out.printf("%s %s %3d: %10.3f ms, %d mensagens, eficiencia %5.1f%%, %.1f C%n",
+                    politica.tipo(), medida ? "medida" : "aquec", i, fim / 1e6,
+                    repeticao.mensagens.get(), eficiencia * 100, temperatura);
         }
 
 
@@ -160,6 +188,22 @@ public class Coordenador {
             x ^= carga.executar(t.id(), t.parametro());
         }
         return x;
+    }
+
+    /** Temperatura do CPU da torre em °C, lida por ssh; NaN se não se medir ou falhar. */
+    private static double lerTemperatura(String host) {
+        if (host.isEmpty()) {
+            return Double.NaN;
+        }
+        try {
+            Process p = new ProcessBuilder("ssh", host, Config.SENSOR_COMANDO).start();
+            String saida = new String(p.getInputStream().readAllBytes()).trim();
+            p.waitFor();
+            return Integer.parseInt(saida) / 1000.0;
+        } catch (IOException | InterruptedException | NumberFormatException e) {
+            System.out.println("Aviso: temperatura nao lida (" + e.getMessage() + ")");
+            return Double.NaN;
+        }
     }
 
 }

@@ -17,7 +17,7 @@ class RepeticaoTest {
 
     @Test
     void comecaAZeroEComOLatchDoTamanhoCerto() {
-        Repeticao r = new Repeticao(tarefas(50));
+        Repeticao r = new Repeticao(tarefas(50), 1);
         assertEquals(0, r.proxima.get());
         assertEquals(50, r.cDownLatch.getCount());
         assertEquals(50, r.recebidos.length());
@@ -29,12 +29,12 @@ class RepeticaoTest {
 
     @Test
     void incompletaSemResultados() {
-        assertTrue(!new Repeticao(tarefas(3)).completa());
+        assertTrue(!new Repeticao(tarefas(3), 1).completa());
     }
 
     @Test
     void completaQuandoCadaTarefaChegouUmaVez() {
-        Repeticao r = new Repeticao(tarefas(3));
+        Repeticao r = new Repeticao(tarefas(3), 1);
         for (int i = 0; i < 3; i++) {
             r.recebidos.incrementAndGet(i);
         }
@@ -43,7 +43,7 @@ class RepeticaoTest {
 
     @Test
     void incompletaComUmaTarefaEmFalta() {
-        Repeticao r = new Repeticao(tarefas(3));
+        Repeticao r = new Repeticao(tarefas(3), 1);
         r.recebidos.incrementAndGet(0);
         r.recebidos.incrementAndGet(2);
         assertTrue(!r.completa());
@@ -51,7 +51,7 @@ class RepeticaoTest {
 
     @Test
     void incompletaComUmaTarefaRepetida() {
-        Repeticao r = new Repeticao(tarefas(3));
+        Repeticao r = new Repeticao(tarefas(3), 1);
         for (int i = 0; i < 3; i++) {
             r.recebidos.incrementAndGet(i);
         }
@@ -61,6 +61,6 @@ class RepeticaoTest {
 
     @Test
     void repeticaoVaziaEstaCompleta() {
-        assertTrue(new Repeticao(new Tarefa[0]).completa());
+        assertTrue(new Repeticao(new Tarefa[0], 1).completa());
     }
 }

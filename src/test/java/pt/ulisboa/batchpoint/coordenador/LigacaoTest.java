@@ -28,7 +28,7 @@ class LigacaoTest {
             List<Thread> threads) throws Exception {
         Socket socketNo = new Socket("localhost", servidor.getLocalPort());
         Canal coord = new Canal(servidor.accept());
-        Thread t = new Thread(new Ligacao(coord, d));
+        Thread t = new Thread(new Ligacao(coord, d, 0));
         t.setUncaughtExceptionHandler((th, e) -> erro.set(e));
         t.setDaemon(true);
         t.start();
@@ -39,7 +39,7 @@ class LigacaoTest {
     @Test
     void conversaCompletaRegistaTudoNaRepeticao() throws Exception {
         Tarefa[] tarefas = GeradorDeTarefas.gerar(7, 10, "uniforme", 42);
-        Repeticao rep = new Repeticao(tarefas);
+        Repeticao rep = new Repeticao(tarefas, 1);
         Distribuidor d = new Distribuidor(3);
         AtomicReference<Throwable> erro = new AtomicReference<>();
         List<Thread> threads = new ArrayList<>();

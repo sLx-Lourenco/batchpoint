@@ -14,14 +14,24 @@ import org.junit.jupiter.api.Test;
 import pt.ulisboa.batchpoint.comum.Politica;
 
 /**
- * Testes do registo em JSON (fase 7): um ficheiro por execução, na pasta da categoria,
- * com todas as repetições e sem temporários. Escrevem numa pasta temporária, nunca em data/.
+ * Testes do registo em JSON (fases 7 e 11): um ficheiro por execução, na pasta da categoria,
+ * com todas as repetições e sem temporários; na fase 11, o ocupado e o parado por ligação,
+ * a eficiência e a temperatura. Escrevem numa pasta temporária, nunca em data/.
  * Gerados pelo Claude.
  */
 class RegistoJsonTest {
 
     private static final Configuracao CONFIG = new Configuracao(Politica.PLANA, "sintetica", 1,
             "baralhada", 20_000, 5_972, 6, 2, 3);
+
+    private static final long[] OCUPADO = {100, 200};
+    private static final long[] PARADO = {10, 20};
+
+    /** Escreve uma repetição com valores da fase 11 fixos (só os da fase 7 mudam). */
+    private static void escrever(RegistoJson r, int rep, long tempo, long msgs, long bytes, long soma)
+            throws Exception {
+        r.escrever(rep, tempo, msgs, bytes, soma, OCUPADO, PARADO, 0.5, 51.25);
+    }
 
     private static List<Path> ficheiros(Path pasta) throws Exception {
         try (Stream<Path> s = Files.list(pasta)) {
@@ -33,8 +43,8 @@ class RegistoJsonTest {
     void umFicheiroComTodasAsRepeticoes() throws Exception {
         Path pasta = Files.createTempDirectory("registo");
         RegistoJson r = new RegistoJson(pasta, "piloto", "cabo", CONFIG, "--politica plana");
-        r.escrever(0, 788_000_000L, 60_000, 340_000, 203_000_000L);
-        r.escrever(1, 786_000_000L, 60_000, 340_000, 203_100_000L);
+        escrever(r, 0, 788_000_000L, 60_000, 340_000, 203_000_000L);
+        escrever(r, 1, 786_000_000L, 60_000, 340_000, 203_100_000L);
 
         List<Path> fs = ficheiros(pasta.resolve("piloto"));
         assertEquals(1, fs.size(), "um só ficheiro, sem .tmp");
@@ -54,7 +64,7 @@ class RegistoJsonTest {
         // Simula uma execução interrompida depois da primeira repetição.
         Path pasta = Files.createTempDirectory("registo");
         RegistoJson r = new RegistoJson(pasta, "testes", "", CONFIG, "x");
-        r.escrever(0, 1, 2, 3, 4);
+        escrever(r, 0, 1, 2, 3, 4);
         String json = Files.readString(r.ficheiro());
         assertTrue(json.contains("\"repeticoes\": [\n    {\"repeticao\": 0"), json);
         assertTrue(json.endsWith("}\n  ]\n}\n"), "sem vírgula a mais depois da última repetição");
@@ -91,7 +101,7 @@ class RegistoJsonTest {
     void comandoComAspasFicaEscapado() throws Exception {
         Path pasta = Files.createTempDirectory("registo");
         RegistoJson r = new RegistoJson(pasta, "testes", "", CONFIG, "--nome \"a b\"");
-        r.escrever(0, 1, 2, 3, 4);
+        escrever(r, 0, 1, 2, 3, 4);
         assertTrue(Files.readString(r.ficheiro()).contains("\"comando\": \"--nome \\\"a b\\\"\""));
     }
 
@@ -99,5 +109,37 @@ class RegistoJsonTest {
     void textoEscapaBarrasEAspas() {
         assertEquals("\"a\\\"b\\\\c\"", RegistoJson.texto("a\"b\\c"));
         assertEquals("\"\"", RegistoJson.texto(""));
+    }
+
+    @Test
+    void camposDaFase11() throws Exception {
+        Path pasta = Files.createTempDirectory("registo");
+        RegistoJson r = new RegistoJson(pasta, "testes", "", CONFIG, "x");
+        r.escrever(0, 1_000, 2, 3, 4, new long[] {900, 950, 1_000}, new long[] {100, 50, 0}, 0.95, 52.3);
+        String json = Files.readString(r.ficheiro());
+        assertTrue(json.contains("\"eficiencia\": 0.95"), json);
+        assertTrue(json.contains("\"temperatura_c\": 52.3"), json);
+        assertTrue(json.contains("\"ocupado_ns\": [900, 950, 1000]"), json);
+        assertTrue(json.contains("\"parado_ns\": [100, 50, 0]}"), json);
+    }
+
+    @Test
+    void temperaturaNaoMedidaFicaNull() throws Exception {
+        // Em localhost não há sensor: NaN não é JSON válido, por isso tem de sair null.
+        Path pasta = Files.createTempDirectory("registo");
+        RegistoJson r = new RegistoJson(pasta, "testes", "", CONFIG, "x");
+        r.escrever(0, 1, 2, 3, 4, OCUPADO, PARADO, 0.5, Double.NaN);
+        String json = Files.readString(r.ficheiro());
+        assertTrue(json.contains("\"temperatura_c\": null"), json);
+        assertTrue(!json.contains("NaN"), "NaN não é JSON válido");
+    }
+
+    @Test
+    void listaENumeroEmJson() {
+        assertEquals("[]", RegistoJson.lista(new long[0]));
+        assertEquals("[7]", RegistoJson.lista(new long[] {7}));
+        assertEquals("[1, -2, 3]", RegistoJson.lista(new long[] {1, -2, 3}));
+        assertEquals("null", RegistoJson.numero(Double.NaN));
+        assertTrue("0.5".equals(RegistoJson.numero(0.5)), "ponto decimal, nunca vírgula");
     }
 }

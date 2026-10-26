@@ -1,0 +1,52 @@
+{
+  "data": "2026-10-26T19:23:21",
+  "comando": "--politica plana --ligacoes 6 --nome instrumentacao --sensor fixo --carga mandelbrot --lado 128",
+  "configuracao": {
+    "politica": "plana",
+    "carga": "mandelbrot",
+    "lote": 1,
+    "desequilibrio": "natural",
+    "tarefas": 1024,
+    "parametro": 128,
+    "ligacoes": 6,
+    "aquecimento": 5,
+    "repeticoes_pedidas": 30
+  },
+  "ambiente": {
+    "coordenador": "slx-IdeaPad",
+    "java": "21.0.12.1",
+    "sistema": "Linux 7.0.0-38-generic"
+  },
+  "repeticoes": [
+    {"repeticao": 0, "tempo_ns": 1380577071, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7969678369},
+    {"repeticao": 1, "tempo_ns": 1372466777, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7931025147},
+    {"repeticao": 2, "tempo_ns": 1371846128, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7931220994},
+    {"repeticao": 3, "tempo_ns": 1378717201, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7957434084},
+    {"repeticao": 4, "tempo_ns": 1365216102, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7913578806},
+    {"repeticao": 5, "tempo_ns": 1374845658, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7950964682},
+    {"repeticao": 6, "tempo_ns": 1367559208, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7909797634},
+    {"repeticao": 7, "tempo_ns": 1367535259, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7909636900},
+    {"repeticao": 8, "tempo_ns": 1366416586, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7910883909},
+    {"repeticao": 9, "tempo_ns": 1364961973, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7909181364},
+    {"repeticao": 10, "tempo_ns": 1371767307, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7937023598},
+    {"repeticao": 11, "tempo_ns": 1369396039, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7932193242},
+    {"repeticao": 12, "tempo_ns": 1369158221, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7937618182},
+    {"repeticao": 13, "tempo_ns": 1368349200, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7924189138},
+    {"repeticao": 14, "tempo_ns": 1368945695, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7925481401},
+    {"repeticao": 15, "tempo_ns": 1367058996, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7909202869},
+    {"repeticao": 16, "tempo_ns": 1364649961, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7907842640},
+    {"repeticao": 17, "tempo_ns": 1364815125, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7906617648},
+    {"repeticao": 18, "tempo_ns": 1363378210, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7907698848},
+    {"repeticao": 19, "tempo_ns": 1366377648, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7906505661},
+    {"repeticao": 20, "tempo_ns": 1364987419, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7906237963},
+    {"repeticao": 21, "tempo_ns": 1364407495, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7908738223},
+    {"repeticao": 22, "tempo_ns": 1364061040, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7905805157},
+    {"repeticao": 23, "tempo_ns": 1364492730, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7905819805},
+    {"repeticao": 24, "tempo_ns": 1364903678, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7905757616},
+    {"repeticao": 25, "tempo_ns": 1365700012, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7907760949},
+    {"repeticao": 26, "tempo_ns": 1363563586, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7906053443},
+    {"repeticao": 27, "tempo_ns": 1363092779, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7906012877},
+    {"repeticao": 28, "tempo_ns": 1365970631, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7905768813},
+    {"repeticao": 29, "tempo_ns": 1365838673, "mensagens": 3072, "bytes_enviados": 17408, "soma_duracoes_ns": 7907601477}
+  ]
+}

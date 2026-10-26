@@ -78,4 +78,4 @@ done
 
 # 5. Correr o coordenador no portátil.
 java -cp target/batchpoint.jar pt.ulisboa.batchpoint.coordenador.Coordenador \
-    --politica "$POLITICA" --ligacoes "$LIGACOES" --nome "$NOME" "$@"
+    --politica "$POLITICA" --ligacoes "$LIGACOES" --nome "$NOME" --sensor "$TORRE" "$@"

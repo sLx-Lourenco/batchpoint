@@ -10,7 +10,7 @@ public final class Distribuidor {
 
     private final int maxLote;
     private final Quadro<Repeticao> quadro = new Quadro<>();
-    private static final Repeticao REP_FINAL = new Repeticao(new Tarefa[0]);
+    private static final Repeticao REP_FINAL = new Repeticao(new Tarefa[0],0);
 
     Distribuidor(int lote){
         this.maxLote=lote;

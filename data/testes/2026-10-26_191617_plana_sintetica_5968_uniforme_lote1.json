@@ -1,0 +1,25 @@
+{
+  "data": "2026-10-26T19:16:17",
+  "comando": "--politica plana --ligacoes 2 --tarefas 20000 --iteracoes 5968 --aquecimento 2 --repeticoes 3",
+  "configuracao": {
+    "politica": "plana",
+    "carga": "sintetica",
+    "lote": 1,
+    "desequilibrio": "uniforme",
+    "tarefas": 20000,
+    "parametro": 5968,
+    "ligacoes": 2,
+    "aquecimento": 2,
+    "repeticoes_pedidas": 3
+  },
+  "ambiente": {
+    "coordenador": "slx-IdeaPad",
+    "java": "21.0.12.1",
+    "sistema": "Linux 7.0.0-38-generic"
+  },
+  "repeticoes": [
+    {"repeticao": 0, "tempo_ns": 265952713, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 189961044},
+    {"repeticao": 1, "tempo_ns": 260001786, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 188850032},
+    {"repeticao": 2, "tempo_ns": 284125614, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 192120928}
+  ]
+}

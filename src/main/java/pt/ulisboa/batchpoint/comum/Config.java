@@ -87,6 +87,13 @@ public final class Config {
 
     public static final int COORD_LADO_POR_OMISSAO = 128;
     public static final String MANDEL_DESEQUILIBRIO = "natural";
+
+
+    // Temperatura da torre (fase 11)
+    public static final String ARG_SENSOR = "sensor";            // host ssh da torre; vazio = não medir
+    public static final String COORD_SENSOR_POR_OMISSAO = "";
+    public static final String SENSOR_COMANDO =
+        "for h in /sys/class/hwmon/hwmon*; do [ \"$(cat $h/name)\" = k10temp ] && cat $h/temp1_input; done; true";
     
     private Config() {}
 }
