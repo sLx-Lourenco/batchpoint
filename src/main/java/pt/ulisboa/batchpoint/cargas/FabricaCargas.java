@@ -9,6 +9,8 @@ public final class FabricaCargas {
 
             case "sintetica" -> new Sintetica();
 
+            case "mandelbrot" -> new Mandelbrot();
+
 
             default -> throw new IllegalArgumentException("Carga desconhecida: " + nome);
         };

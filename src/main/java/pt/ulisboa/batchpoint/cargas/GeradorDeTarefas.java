@@ -74,4 +74,24 @@ public final class GeradorDeTarefas {
         return tarefas;
     }
 
+
+    public static Tarefa[] gerarMandelbrot(int lado){
+
+        if(lado<=0 || Config.MANDEL_TAMANHO % lado != 0){
+            throw new IllegalArgumentException("Lado invalido: " + lado + " (tem de ser positivo e dividir " + Config.MANDEL_TAMANHO + ")");
+        }
+        int blocosPorLado= (Config.MANDEL_TAMANHO / lado);
+        int numBlocos = blocosPorLado*blocosPorLado;
+
+        Tarefa[] tarefas = new Tarefa[numBlocos];
+
+        for(int i=0; i<numBlocos;i++){
+
+            tarefas[i] = new Tarefa(i, lado);
+
+        }
+
+        return tarefas;
+    }
+
 }

@@ -1,0 +1,24 @@
+{
+  "data": "2026-10-26T18:30:02",
+  "comando": "--politica plana --ligacoes 2 --carga mandelbrot --lado 512 --aquecimento 1 --repeticoes 2 --verificar y",
+  "configuracao": {
+    "politica": "plana",
+    "carga": "mandelbrot",
+    "lote": 1,
+    "desequilibrio": "natural",
+    "tarefas": 64,
+    "parametro": 512,
+    "ligacoes": 2,
+    "aquecimento": 1,
+    "repeticoes_pedidas": 2
+  },
+  "ambiente": {
+    "coordenador": "slx-IdeaPad",
+    "java": "21.0.12.1",
+    "sistema": "Linux 7.0.0-38-generic"
+  },
+  "repeticoes": [
+    {"repeticao": 0, "tempo_ns": 3151253291, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 6265666801},
+    {"repeticao": 1, "tempo_ns": 3146825938, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 6265628229}
+  ]
+}

@@ -29,11 +29,12 @@ public class Coordenador {
         int lote = a.inteiro(Config.ARG_LOTE, Config.LOTE_POR_OMISSAO);
         String nomeCarga = a.texto(Config.ARG_CARGA, Config.COORD_CARGA_POR_OMISSAO);
         int nTarefas = a.inteiro(Config.ARG_TAREFAS, Config.COORD_TAREFAS_POR_OMISSAO);
-        long iteracoes = a.longo(Config.ARG_ITERACOES);
         String desequilibrio = a.texto(Config.ARG_DESEQUILIBRIO, Config.COORD_DESEQUILIBRIO_POR_OMISSAO);
         int aquecimento = a.inteiro(Config.ARG_AQUECIMENTO, Config.COORD_AQUECIMENTO_POR_OMISSAO);
         int repeticoes = a.inteiro(Config.ARG_REPETICOES, Config.COORD_REPETICOES_POR_OMISSAO);
         boolean verificar = a.texto(Config.ARG_VERIFICAR, Config.COORD_VERIFICAR_POR_OMISSAO).equals("y");
+        int lado = a.inteiro(Config.ARG_LADO, Config.COORD_LADO_POR_OMISSAO);
+
     
         //para os registos data
         String categoria = a.texto(Config.ARG_CATEGORIA, Config.REGISTO_CATEGORIA_POR_OMISSAO);
@@ -45,17 +46,38 @@ public class Coordenador {
             throw new IllegalArgumentException("Politica plana tem de ter 1 lote");
         }
 
+        Tarefa[] tarefas;
+        long parametro;
+        String desequilibrioReg;
 
+        switch (nomeCarga) {
 
-        Tarefa[] tarefas = GeradorDeTarefas.gerar(nTarefas, iteracoes, desequilibrio,Config.COORD_SEMENTE);
+            case "sintetica" -> {
+                parametro = a.longo(Config.ARG_ITERACOES);
+                desequilibrioReg = desequilibrio;
+                tarefas = GeradorDeTarefas.gerar(nTarefas, parametro, desequilibrio,Config.COORD_SEMENTE);
+            }
 
+            case "mandelbrot" -> {
+                parametro = lado;
+                desequilibrioReg = Config.MANDEL_DESEQUILIBRIO;
+                tarefas = GeradorDeTarefas.gerarMandelbrot(lado);
+                
+            }
+            
+            default -> {
+                throw new IllegalArgumentException("Carga desconhecida: " + nomeCarga);
+            }
+
+        }
+        
 
         // Fica a null quando não se verifica.
         Long esperado = verificar ? checksumSequencial(FabricaCargas.criar(nomeCarga), tarefas) : null;
         
         //registos
-        Configuracao config = new Configuracao(politica, nomeCarga, lote, desequilibrio, tarefas.length, 
-            iteracoes, ligacoes, aquecimento, repeticoes);
+        Configuracao config = new Configuracao(politica, nomeCarga, lote, desequilibrioReg, tarefas.length, 
+            parametro, ligacoes, aquecimento, repeticoes);
 
         RegistoJson registo = new RegistoJson(Path.of(Config.REGISTO_PASTA_POR_OMISSAO),
             categoria, nome, config, String.join(" ", args));

@@ -72,6 +72,21 @@ public final class Config {
     public static final String REGISTO_CATEGORIA_POR_OMISSAO = "testes";
     public static final String REGISTO_NOME_POR_OMISSAO = "";
     public static final String REGISTO_PASTA_POR_OMISSAO = "data";
+
+
+    // Mandelbrot
+    public static final int MANDEL_TAMANHO = 4096;           // imagem de 4096 x 4096 píxeis
+    public static final double MANDEL_X_MIN = -2.0;          // região [-2, 1] x [-1.5, 1.5]
+    public static final double MANDEL_Y_MIN = -1.5;
+    public static final double MANDEL_LARGURA = 3.0;         // igual nos dois eixos
+    public static final int MANDEL_MAX_ITERACOES = 1000;
+    public static final String ARG_LADO = "lado";
+    public static final int[] MANDEL_LADOS = {512, 128, 32, 8};
+    public static final int MANDEL_LADO_AQUECIMENTO = 128;
+
+
+    public static final int COORD_LADO_POR_OMISSAO = 128;
+    public static final String MANDEL_DESEQUILIBRIO = "natural";
     
     private Config() {}
 }

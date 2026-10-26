@@ -1,0 +1,52 @@
+{
+  "data": "2026-10-26T18:31:42",
+  "comando": "--politica plana --ligacoes 6 --nome switch --carga mandelbrot --lado 512 --verificar y",
+  "configuracao": {
+    "politica": "plana",
+    "carga": "mandelbrot",
+    "lote": 1,
+    "desequilibrio": "natural",
+    "tarefas": 64,
+    "parametro": 512,
+    "ligacoes": 6,
+    "aquecimento": 5,
+    "repeticoes_pedidas": 30
+  },
+  "ambiente": {
+    "coordenador": "slx-IdeaPad",
+    "java": "21.0.12.1",
+    "sistema": "Linux 7.0.0-38-generic"
+  },
+  "repeticoes": [
+    {"repeticao": 0, "tempo_ns": 1578390398, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8249895627},
+    {"repeticao": 1, "tempo_ns": 1578536156, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8464291074},
+    {"repeticao": 2, "tempo_ns": 1574117154, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8587173873},
+    {"repeticao": 3, "tempo_ns": 1506338999, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8155616212},
+    {"repeticao": 4, "tempo_ns": 1501198278, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8157120509},
+    {"repeticao": 5, "tempo_ns": 1569512929, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8371029170},
+    {"repeticao": 6, "tempo_ns": 1572689364, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8479761050},
+    {"repeticao": 7, "tempo_ns": 1556146056, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8252312763},
+    {"repeticao": 8, "tempo_ns": 1503424447, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8511829017},
+    {"repeticao": 9, "tempo_ns": 1500028691, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8147712262},
+    {"repeticao": 10, "tempo_ns": 1507726795, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8514291050},
+    {"repeticao": 11, "tempo_ns": 1590378147, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8399450753},
+    {"repeticao": 12, "tempo_ns": 1507588948, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8181059033},
+    {"repeticao": 13, "tempo_ns": 1508894967, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8152356335},
+    {"repeticao": 14, "tempo_ns": 1507365155, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8152818998},
+    {"repeticao": 15, "tempo_ns": 1507231364, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8148933857},
+    {"repeticao": 16, "tempo_ns": 1572940450, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8374547870},
+    {"repeticao": 17, "tempo_ns": 1502538262, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8149746568},
+    {"repeticao": 18, "tempo_ns": 1498037254, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8146272190},
+    {"repeticao": 19, "tempo_ns": 1507519647, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8151717813},
+    {"repeticao": 20, "tempo_ns": 1508005437, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8152447335},
+    {"repeticao": 21, "tempo_ns": 1507810060, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8150424924},
+    {"repeticao": 22, "tempo_ns": 1507951953, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8145371668},
+    {"repeticao": 23, "tempo_ns": 1488387328, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8144604021},
+    {"repeticao": 24, "tempo_ns": 1509212599, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8404503071},
+    {"repeticao": 25, "tempo_ns": 1502594728, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8263485073},
+    {"repeticao": 26, "tempo_ns": 1488175393, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8144359388},
+    {"repeticao": 27, "tempo_ns": 1507596374, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8144665574},
+    {"repeticao": 28, "tempo_ns": 1506820652, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8149433846},
+    {"repeticao": 29, "tempo_ns": 1502961014, "mensagens": 192, "bytes_enviados": 1088, "soma_duracoes_ns": 8150610506}
+  ]
+}
