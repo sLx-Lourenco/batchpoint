@@ -13,7 +13,7 @@ import pt.ulisboa.batchpoint.comum.Politica;
 import pt.ulisboa.batchpoint.no.hierarquico.NoHierarquico;
 import pt.ulisboa.batchpoint.no.plano.NoPlano;
 
-public class AgenteNo {
+public final class AgenteNo {
 
     public static void main(String[] args) throws Exception{
         Argumentos a = new Argumentos(args);
@@ -33,8 +33,8 @@ public class AgenteNo {
 
         int lote = a.inteiro(Config.ARG_LOTE, Config.COORD_LOTE_POR_OMISSAO);
 
-        System.out.print(modo + " : " + id + " : " + threads +" : "+ coordenador.getHostString() + ":" + coordenador.getPort() + "\n");
-
+        System.out.printf("No %d (%s), %d threads, coordenador %s:%d%n",
+            id, politica.tipo(), threads, coordenador.getHostString(), coordenador.getPort());
 
 
         switch(politica){
@@ -66,7 +66,7 @@ public class AgenteNo {
             }catch(ConnectException e){
                 cont++;
 
-                if(cont>Config.NO_MAX_TENTATIVAS){
+                if(cont>=Config.NO_MAX_TENTATIVAS){
                     throw e;
                 }else{
                     Thread.sleep(Config.NO_INTERVALO_TENTATIVAS_MS);
