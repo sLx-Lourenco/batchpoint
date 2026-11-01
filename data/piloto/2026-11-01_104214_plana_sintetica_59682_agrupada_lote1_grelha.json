@@ -1,0 +1,32 @@
+{
+  "data": "2026-11-01T10:42:14",
+  "comando": "--politica plana --ligacoes 6 --nome grelha --sensor fixo --tarefas 20000 --iteracoes 59682 --desequilibrio agrupada --lote 1 --categoria piloto --repeticoes 10 --verificar y",
+  "configuracao": {
+    "politica": "plana",
+    "carga": "sintetica",
+    "lote": 1,
+    "desequilibrio": "agrupada",
+    "tarefas": 20000,
+    "parametro": 59682,
+    "ligacoes": 6,
+    "aquecimento": 10,
+    "repeticoes_pedidas": 10
+  },
+  "ambiente": {
+    "coordenador": "slx-IdeaPad",
+    "java": "21.0.12.1",
+    "sistema": "Linux 7.0.0-38-generic"
+  },
+  "repeticoes": [
+    {"repeticao": 0, "tempo_ns": 1113284079, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2002822900, "eficiencia": 0.2998370523420255, "temperatura_c": 47.5, "ocupado_ns": [333966327, 334355682, 332368341, 331815000, 334470077, 335847473], "parado_ns": [779317752, 778928397, 780915738, 781469079, 778814002, 777436606]},
+    {"repeticao": 1, "tempo_ns": 1097263638, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2002519482, "eficiencia": 0.30416869332181407, "temperatura_c": 47.5, "ocupado_ns": [333161364, 334588509, 332151036, 331261768, 336194336, 335162469], "parado_ns": [764102274, 762675129, 765112602, 766001870, 761069302, 762101169]},
+    {"repeticao": 2, "tempo_ns": 1051877679, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2001729851, "eficiencia": 0.3171677168304408, "temperatura_c": 47.5, "ocupado_ns": [337159751, 330160303, 332089839, 330971140, 336733948, 334614870], "parado_ns": [714717928, 721717376, 719787840, 720906539, 715143731, 717262809]},
+    {"repeticao": 3, "tempo_ns": 1090763080, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2003275405, "eficiencia": 0.30609693368670554, "temperatura_c": 47.75, "ocupado_ns": [335827332, 335498792, 334799538, 329580788, 332382626, 335186329], "parado_ns": [754935748, 755264288, 755963542, 761182292, 758380454, 755576751]},
+    {"repeticao": 4, "tempo_ns": 1050011755, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2002339707, "eficiencia": 0.3178281413620936, "temperatura_c": 47.875, "ocupado_ns": [332314915, 333658545, 329993000, 334744106, 335611604, 336017537], "parado_ns": [717696840, 716353210, 720018755, 715267649, 714400151, 713994218]},
+    {"repeticao": 5, "tempo_ns": 1062075391, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2002298434, "eficiencia": 0.3142115978720259, "temperatura_c": 47.75, "ocupado_ns": [334840031, 331354935, 333770428, 334683098, 335122667, 332527275], "parado_ns": [727235360, 730720456, 728304963, 727392293, 726952724, 729548116]},
+    {"repeticao": 6, "tempo_ns": 1091254379, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2002487121, "eficiencia": 0.3058387301096915, "temperatura_c": 47.75, "ocupado_ns": [332528730, 334769644, 333733740, 330502576, 338331846, 332620585], "parado_ns": [758725649, 756484735, 757520639, 760751803, 752922533, 758633794]},
+    {"repeticao": 7, "tempo_ns": 1092014924, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2002555459, "eficiencia": 0.3056361555427485, "temperatura_c": 47.875, "ocupado_ns": [333627128, 332304369, 333620273, 332077379, 338604753, 332321557], "parado_ns": [758387796, 759710555, 758394651, 759937545, 753410171, 759693367]},
+    {"repeticao": 8, "tempo_ns": 1112768498, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2003228425, "eficiencia": 0.3000367145248451, "temperatura_c": 47.75, "ocupado_ns": [333226412, 336925694, 332680819, 333174612, 332547921, 334672967], "parado_ns": [779542086, 775842804, 780087679, 779593886, 780220577, 778095531]},
+    {"repeticao": 9, "tempo_ns": 1067398666, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2002475689, "eficiencia": 0.3126722552664935, "temperatura_c": 47.625, "ocupado_ns": [333154346, 332937460, 334443159, 334341952, 333698214, 333900558], "parado_ns": [734244320, 734461206, 732955507, 733056714, 733700452, 733498108]}
+  ]
+}

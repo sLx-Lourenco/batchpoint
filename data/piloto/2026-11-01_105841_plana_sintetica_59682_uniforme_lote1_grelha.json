@@ -1,0 +1,32 @@
+{
+  "data": "2026-11-01T10:58:41",
+  "comando": "--politica plana --ligacoes 6 --nome grelha --sensor fixo --tarefas 20000 --iteracoes 59682 --desequilibrio uniforme --lote 1 --categoria piloto --repeticoes 10 --verificar y",
+  "configuracao": {
+    "politica": "plana",
+    "carga": "sintetica",
+    "lote": 1,
+    "desequilibrio": "uniforme",
+    "tarefas": 20000,
+    "parametro": 59682,
+    "ligacoes": 6,
+    "aquecimento": 10,
+    "repeticoes_pedidas": 10
+  },
+  "ambiente": {
+    "coordenador": "slx-IdeaPad",
+    "java": "21.0.12.1",
+    "sistema": "Linux 7.0.0-38-generic"
+  },
+  "repeticoes": [
+    {"repeticao": 0, "tempo_ns": 1002604085, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2004853150, "eficiencia": 0.33327431701683785, "temperatura_c": 47.125, "ocupado_ns": [332854210, 334857559, 333402226, 332485740, 335749889, 335503526], "parado_ns": [669749875, 667746526, 669201859, 670118345, 666854196, 667100559]},
+    {"repeticao": 1, "tempo_ns": 1044350266, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2002116541, "eficiencia": 0.31951549305840526, "temperatura_c": 47.125, "ocupado_ns": [332141181, 333424111, 330828208, 331546349, 335476818, 338699874], "parado_ns": [712209085, 710926155, 713522058, 712803917, 708873448, 705650392]},
+    {"repeticao": 2, "tempo_ns": 1059309598, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2002004493, "eficiencia": 0.31498573800329144, "temperatura_c": 47.125, "ocupado_ns": [334650921, 334051979, 330390629, 332017910, 337443740, 333449314], "parado_ns": [724658677, 725257619, 728918969, 727291688, 721865858, 725860284]},
+    {"repeticao": 3, "tempo_ns": 1024565381, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2002189538, "eficiencia": 0.3256973761963692, "temperatura_c": 47.25, "ocupado_ns": [334262177, 334780819, 332634902, 330175726, 335197049, 335138865], "parado_ns": [690303204, 689784562, 691930479, 694389655, 689368332, 689426516]},
+    {"repeticao": 4, "tempo_ns": 1038178352, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2002811290, "eficiencia": 0.3215265286774798, "temperatura_c": 47.375, "ocupado_ns": [332072627, 334455183, 331555431, 331729451, 336898074, 336100524], "parado_ns": [706105725, 703723169, 706622921, 706448901, 701280278, 702077828]},
+    {"repeticao": 5, "tempo_ns": 1049814512, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2002527494, "eficiencia": 0.3179176688056045, "temperatura_c": 47.25, "ocupado_ns": [334752658, 333596770, 330048474, 330741733, 336718858, 336669001], "parado_ns": [715061854, 716217742, 719766038, 719072779, 713095654, 713145511]},
+    {"repeticao": 6, "tempo_ns": 1024503963, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2002293088, "eficiencia": 0.32573374698275, "temperatura_c": 47.125, "ocupado_ns": [334858061, 332136492, 333510667, 331582280, 334779000, 335426588], "parado_ns": [689645902, 692367471, 690993296, 692921683, 689724963, 689077375]},
+    {"repeticao": 7, "tempo_ns": 1017043108, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2002292107, "eficiencia": 0.3281231135058895, "temperatura_c": 47.125, "ocupado_ns": [332754311, 331508418, 332473060, 333360954, 334765944, 337429420], "parado_ns": [684288797, 685534690, 684570048, 683682154, 682277164, 679613688]},
+    {"repeticao": 8, "tempo_ns": 1047650933, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2003069355, "eficiencia": 0.3186604258958838, "temperatura_c": 47.0, "ocupado_ns": [333083108, 335806902, 331897658, 331388484, 334740569, 336152634], "parado_ns": [714567825, 711844031, 715753275, 716262449, 712910364, 711498299]},
+    {"repeticao": 9, "tempo_ns": 1031706428, "mensagens": 60000, "bytes_enviados": 340000, "soma_duracoes_ns": 2002939423, "eficiencia": 0.32356417301169194, "temperatura_c": 46.75, "ocupado_ns": [333421754, 332400725, 331599945, 333559899, 336687334, 335269766], "parado_ns": [698284674, 699305703, 700106483, 698146529, 695019094, 696436662]}
+  ]
+}

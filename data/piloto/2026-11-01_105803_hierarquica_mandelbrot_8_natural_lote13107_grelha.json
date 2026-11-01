@@ -1,0 +1,32 @@
+{
+  "data": "2026-11-01T10:58:03",
+  "comando": "--politica hierarquica --ligacoes 3 --nome grelha --sensor fixo --carga mandelbrot --lado 8 --lote 13107 --categoria piloto --repeticoes 10 --verificar y",
+  "configuracao": {
+    "politica": "hierarquica",
+    "carga": "mandelbrot",
+    "lote": 13107,
+    "desequilibrio": "natural",
+    "tarefas": 262144,
+    "parametro": 8,
+    "ligacoes": 3,
+    "aquecimento": 10,
+    "repeticoes_pedidas": 10
+  },
+  "ambiente": {
+    "coordenador": "slx-IdeaPad",
+    "java": "21.0.12.1",
+    "sistema": "Linux 7.0.0-38-generic"
+  },
+  "repeticoes": [
+    {"repeticao": 0, "tempo_ns": 1480663227, "mensagens": 63, "bytes_enviados": 3145833, "soma_duracoes_ns": 8327283768, "eficiencia": 0.9373371356105138, "temperatura_c": 49.5, "ocupado_ns": [2783883077, 2656385539, 2887015152], "parado_ns": [177443377, 304940915, 74311302]},
+    {"repeticao": 1, "tempo_ns": 1461503768, "mensagens": 63, "bytes_enviados": 3145833, "soma_duracoes_ns": 8339566122, "eficiencia": 0.9510257294115988, "temperatura_c": 49.5, "ocupado_ns": [2688725641, 2789323115, 2861517366], "parado_ns": [234281895, 133684421, 61490170]},
+    {"repeticao": 2, "tempo_ns": 1472491121, "mensagens": 63, "bytes_enviados": 3145833, "soma_duracoes_ns": 8346830851, "eficiencia": 0.9447516900624263, "temperatura_c": 49.5, "ocupado_ns": [2792267635, 2679017364, 2875545852], "parado_ns": [152714607, 265964878, 69436390]},
+    {"repeticao": 3, "tempo_ns": 1484351073, "mensagens": 63, "bytes_enviados": 3145833, "soma_duracoes_ns": 8328763338, "eficiencia": 0.9351744666404805, "temperatura_c": 49.5, "ocupado_ns": [2649763495, 2789406757, 2889593086], "parado_ns": [318938651, 179295389, 79109060]},
+    {"repeticao": 4, "tempo_ns": 1462751442, "mensagens": 63, "bytes_enviados": 3145833, "soma_duracoes_ns": 8302578191, "eficiencia": 0.9460001146478674, "temperatura_c": 49.5, "ocupado_ns": [2857830087, 2657063293, 2787684811], "parado_ns": [67672797, 268439591, 137818073]},
+    {"repeticao": 5, "tempo_ns": 1467616103, "mensagens": 63, "bytes_enviados": 3145833, "soma_duracoes_ns": 8325783333, "eficiencia": 0.9454996798301006, "temperatura_c": 49.5, "ocupado_ns": [2868677314, 2789425776, 2667680243], "parado_ns": [66554892, 145806430, 267551963]},
+    {"repeticao": 6, "tempo_ns": 1470786355, "mensagens": 63, "bytes_enviados": 3145833, "soma_duracoes_ns": 8304458461, "eficiencia": 0.9410451799892219, "temperatura_c": 49.5, "ocupado_ns": [2783948714, 2656639665, 2863870082], "parado_ns": [157623996, 284933045, 77702628]},
+    {"repeticao": 7, "tempo_ns": 1471454778, "mensagens": 63, "bytes_enviados": 3145833, "soma_duracoes_ns": 8315080237, "eficiencia": 0.941820793195091, "temperatura_c": 49.5, "ocupado_ns": [2654720881, 2789142642, 2871216714], "parado_ns": [288188675, 153766914, 71692842]},
+    {"repeticao": 8, "tempo_ns": 1466308443, "mensagens": 63, "bytes_enviados": 3145833, "soma_duracoes_ns": 8312902109, "eficiencia": 0.9448787473382456, "temperatura_c": 49.5, "ocupado_ns": [2788387495, 2661049562, 2863465052], "parado_ns": [144229391, 271567324, 69151834]},
+    {"repeticao": 9, "tempo_ns": 1474617000, "mensagens": 63, "bytes_enviados": 3145833, "soma_duracoes_ns": 8315027248, "eficiencia": 0.9397951296280096, "temperatura_c": 49.625, "ocupado_ns": [2650850483, 2789986577, 2874190188], "parado_ns": [298383517, 159247423, 75043812]}
+  ]
+}

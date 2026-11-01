@@ -1,0 +1,27 @@
+{
+  "data": "2026-11-01T10:21:53",
+  "comando": "--politica hierarquica --ligacoes 1 --nome base1 --sensor fixo --tarefas 200000 --iteracoes 5968 --lote 10000 --aquecimento 2 --repeticoes 5 --categoria piloto",
+  "configuracao": {
+    "politica": "hierarquica",
+    "carga": "sintetica",
+    "lote": 10000,
+    "desequilibrio": "uniforme",
+    "tarefas": 200000,
+    "parametro": 5968,
+    "ligacoes": 1,
+    "aquecimento": 2,
+    "repeticoes_pedidas": 5
+  },
+  "ambiente": {
+    "coordenador": "slx-IdeaPad",
+    "java": "21.0.12.1",
+    "sistema": "Linux 7.0.0-38-generic"
+  },
+  "repeticoes": [
+    {"repeticao": 0, "tempo_ns": 2163425481, "mensagens": 60, "bytes_enviados": 2400100, "soma_duracoes_ns": 2012467498, "eficiencia": 0.9302227026880433, "temperatura_c": 45.25, "ocupado_ns": [2012467498], "parado_ns": [150957983]},
+    {"repeticao": 1, "tempo_ns": 2168155697, "mensagens": 60, "bytes_enviados": 2400100, "soma_duracoes_ns": 2011454407, "eficiencia": 0.927725997622393, "temperatura_c": 45.25, "ocupado_ns": [2011454407], "parado_ns": [156701290]},
+    {"repeticao": 2, "tempo_ns": 2182755905, "mensagens": 60, "bytes_enviados": 2400100, "soma_duracoes_ns": 2011291811, "eficiencia": 0.9214460519349734, "temperatura_c": 45.25, "ocupado_ns": [2011291811], "parado_ns": [171464094]},
+    {"repeticao": 3, "tempo_ns": 2178878398, "mensagens": 60, "bytes_enviados": 2400100, "soma_duracoes_ns": 2011255052, "eficiencia": 0.9230689761512795, "temperatura_c": 45.375, "ocupado_ns": [2011255052], "parado_ns": [167623346]},
+    {"repeticao": 4, "tempo_ns": 2183465417, "mensagens": 60, "bytes_enviados": 2400100, "soma_duracoes_ns": 2014858196, "eficiencia": 0.9227799901536063, "temperatura_c": 45.25, "ocupado_ns": [2014858196], "parado_ns": [168607221]}
+  ]
+}

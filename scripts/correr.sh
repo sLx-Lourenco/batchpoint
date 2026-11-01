@@ -14,6 +14,13 @@
 # Se um nó falhar, a saída dele fica disponível com:  ssh fixo docker logs no1
 
 set -euo pipefail
+
+# O coordenador corre no portátil: no modo equilibrado, baixa a frequência e atrasa a plana.
+if command -v powerprofilesctl > /dev/null && [ "$(powerprofilesctl get)" != performance ]; then
+    echo "ERRO: o portátil está no perfil '$(powerprofilesctl get)'; corre: powerprofilesctl set performance" >&2
+    exit 1
+fi
+
 cd "$(dirname "$0")/.."                 # corre sempre a partir da raiz do projeto
 
 if [ $# -lt 2 ]; then
@@ -26,8 +33,9 @@ shift 2
 
 TORRE=fixo                  # nome da torre no ~/.ssh/config
 COORD_IP=10.42.0.1          # IP do portátil no cabo direto
-NOS=3
-THREADS=2
+NOS=${NOS:-3}                   # pode ser mudado de fora: NOS=1 scripts/correr.sh ...
+THREADS=${THREADS:-2}
+PRIMEIRO_CORE=${PRIMEIRO_CORE:-0}
 IMAGEM=batchpoint-no
 SLICE=batchpoint.slice      # slice com os cores 0-5 (ver setup_torre.md)
 
@@ -50,14 +58,13 @@ case "$POLITICA" in
     *) echo "Política desconhecida: $POLITICA (usa plana ou hierarquica)" >&2; exit 1 ;;
 esac
 
-# 1. Compilar o jar (os testes correm à parte, com mvn package).
-mvn -q package -DskipTests
-
-# 2. Copiar o jar e o Dockerfile para a torre e construir a imagem lá.
-#    O Docker reaproveita as camadas que não mudaram, por isso só o jar é refeito.
-ssh "$TORRE" "mkdir -p ~/batchpoint"
-scp -q target/batchpoint.jar docker/Dockerfile "$TORRE":~/batchpoint/
-ssh "$TORRE" "cd ~/batchpoint && docker build -q -t $IMAGEM . > /dev/null"
+# 1 e 2. Compilar e enviar o jar (saltado com SEM_BUILD=1, usado pelos scripts de varredura).
+if [ -z "${SEM_BUILD:-}" ]; then
+    mvn -q package -DskipTests
+    ssh "$TORRE" "mkdir -p ~/batchpoint"
+    scp -q target/batchpoint.jar docker/Dockerfile "$TORRE":~/batchpoint/
+    ssh "$TORRE" "cd ~/batchpoint && docker build -q -t $IMAGEM . > /dev/null"
+fi
 
 # 3. Apagar contentores de uma execução anterior e, no fim desta (mesmo com erro ou Ctrl+C),
 #    parar os desta. Ficam parados mas não apagados, para se poderem ler os logs.
@@ -68,8 +75,8 @@ trap 'ssh "$TORRE" "docker stop -t 1 $NOMES > /dev/null 2>&1 || true"' EXIT
 # 4. Arrancar os nós: cada um preso aos seus 2 cores (0-1, 2-3, 4-5), dentro da slice dos nós,
 #    com a rede da torre (sem NAT). Ficam a tentar ligar até o coordenador abrir a porta.
 for i in $(seq 1 $NOS); do
-    C=$(( (i - 1) * THREADS ))
-    CORES="$C-$(( C + THREADS - 1 ))"
+    C=$(( PRIMEIRO_CORE + (i - 1) * THREADS ))
+    if (( THREADS > 1 )); then CORES="$C-$(( C + THREADS - 1 ))"; else CORES="$C"; fi
     ssh "$TORRE" "docker run -d --name no$i \
         --cgroup-parent=$SLICE --cpuset-cpus $CORES --network host \
         $IMAGEM --modo $POLITICA --id $i --threads $THREADS --carga $CARGA --lote $LOTE \
