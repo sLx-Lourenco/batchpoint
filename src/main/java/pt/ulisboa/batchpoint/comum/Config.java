@@ -55,7 +55,7 @@ public final class Config {
     public static final String COORD_CARGA_POR_OMISSAO = "sintetica";
     public static final int COORD_TAREFAS_POR_OMISSAO = 1000;
     public static final String COORD_DESEQUILIBRIO_POR_OMISSAO = "uniforme";
-    public static final int COORD_AQUECIMENTO_POR_OMISSAO = 5;
+    public static final int COORD_AQUECIMENTO_POR_OMISSAO = 10;
     public static final int COORD_REPETICOES_POR_OMISSAO = 30;
     public static final String COORD_VERIFICAR_POR_OMISSAO = "n";
     public static final long COORD_SEMENTE = 42L;
