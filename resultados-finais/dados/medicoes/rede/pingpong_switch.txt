@@ -1,0 +1,3 @@
+idas e voltas medidas: 10000 (aquecimento: 1000)
+ minimo (µs) mediana (µs)     p99 (µs)
+        87.1        119.6        286.0

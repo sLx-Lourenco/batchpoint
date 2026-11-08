@@ -1,6 +1,8 @@
 """Fase 12, parte 1: quantas repetições descartar como aquecimento.
 
-Lê as execuções do piloto com o nome "aquecimento" (corridas com --aquecimento 0 e
+Uso: python analise/src/aquecimento.py [piloto|final]   (por omissão: final)
+
+Lê as execuções com o nome "aquecimento" (corridas com --aquecimento 0 e
 --repeticoes 50, por isso guardam todas as repetições) e desenha o tempo de cada
 repetição, um painel por configuração.
 
@@ -9,12 +11,11 @@ Critério de estabilização (o ruído muda muito entre configurações: ~0,2 % 
   - regime: a segunda metade das repetições; referência = a mediana dela;
   - ruído: o desvio-padrão robusto do regime (1,4826 × a mediana dos desvios absolutos,
     que não se deixa levar por uma ou outra repetição muito lenta);
-  - tolerância = max(K_RUIDO × ruído, TOLERANCIA_MINIMA × referência);
-  - o aquecimento acaba na primeira repetição r que está ela própria na faixa
-    referência ± tolerância e em que a mediana das JANELA repetições a partir de r também
-    está (a primeira condição apanha uma 1.ª repetição lenta isolada, que a mediana
-    alisaria; a segunda evita parar numa descida fortuita). Uma subida isolada mais tarde
-    não é aquecimento, por isso conta a primeira entrada e não a última saída.
+  - faixa = referência ± max(K_RUIDO × ruído, TOLERANCIA_MINIMA × referência);
+  - o aquecimento acaba na primeira repetição r tal que ela própria está na faixa e, das
+    JANELA repetições a partir de r, no máximo MAX_FORA ficam fora dela. Uma repetição
+    lenta isolada mais tarde (uma em JANELA) é ruído, não aquecimento; duas ou mais
+    seguidas fora da faixa, como uma curva que entra e volta a sair, ainda são aquecimento.
 O valor a usar é o maior das configurações.
 """
 
@@ -22,10 +23,11 @@ import sys
 
 import matplotlib.pyplot as plt
 
-from carregar import FIGURAS, carregar
+from carregar import carregar, categoria_dos_argumentos, guardar
 
 NOME = "aquecimento"         # o <nome> dado ao correr.sh
-JANELA = 5                   # repetições na mediana móvel
+JANELA = 10                  # repetições olhadas a partir de cada candidata
+MAX_FORA = 1                 # quantas delas podem ficar fora da faixa
 K_RUIDO = 3                  # tolerância = 3 desvios-padrão do ruído...
 TOLERANCIA_MINIMA = 0.005    # ...mas nunca menos de 0,5 % da referência
 
@@ -43,18 +45,21 @@ def primeira_estavel(tempos):
     ruido = 1.4826 * (regime - referencia).abs().median()
     tolerancia = max(K_RUIDO * ruido, TOLERANCIA_MINIMA * referencia)
 
-    # mediana das JANELA repetições a partir de cada r (para a frente)
-    movel = tempos[::-1].rolling(JANELA, min_periods=JANELA).median()[::-1]
-    dentro = ((movel - referencia).abs() <= tolerancia) & ((tempos - referencia).abs() <= tolerancia)
-    k = int(dentro.idxmax()) if dentro.any() else len(tempos)
+    fora = ((tempos - referencia).abs() > tolerancia).to_numpy()
+    k = len(tempos)
+    for r in range(len(tempos) - JANELA + 1):
+        if not fora[r] and fora[r:r + JANELA].sum() <= MAX_FORA:
+            k = r
+            break
     return k, referencia, tolerancia
 
 
 def main():
-    df = carregar("piloto")
+    categoria = categoria_dos_argumentos()
+    df = carregar(categoria)
     df = df[df["ficheiro"].str.endswith(f"_{NOME}.json")]
     if df.empty:
-        sys.exit(f"Nenhuma execução '{NOME}' em data/piloto/")
+        sys.exit(f"Nenhuma execução '{NOME}' em data/{categoria}/")
 
     grupos = list(df.groupby("ficheiro", sort=True))
     fig, eixos = plt.subplots(len(grupos), 1, figsize=(7, 2.4 * len(grupos)), squeeze=False)
@@ -86,10 +91,7 @@ def main():
                  x=0.01, ha="left", fontsize=11, color=TEXTO)
     fig.tight_layout()
 
-    FIGURAS.mkdir(exist_ok=True)
-    saida = FIGURAS / "aquecimento.png"
-    fig.savefig(saida, dpi=200)
-    fig.savefig(saida.with_suffix(".pdf"))
+    saida = guardar(fig, "aquecimento", categoria)
 
     print("Aquecimento sugerido por configuração (tolerância em % do regime):")
     for rot, k, tol in sugestoes:

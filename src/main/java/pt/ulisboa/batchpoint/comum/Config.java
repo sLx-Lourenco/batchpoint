@@ -95,5 +95,10 @@ public final class Config {
     public static final String SENSOR_COMANDO =
         "for h in /sys/class/hwmon/hwmon*; do [ \"$(cat $h/name)\" = k10temp ] && cat $h/temp1_input; done; true";
     
+
+    // Caracterização do Mandelbrot (ferramentas/CaracterizacaoMandelbrot)
+    public static final String ARG_PASTA = "pasta";
+    public static final String CARACT_PASTA_POR_OMISSAO = "data/caracterizacao";
+    public static final String CARACT_FICHEIRO_BLOCOS = "mandelbrot_blocos.csv";
     private Config() {}
 }

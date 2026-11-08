@@ -1,0 +1,7 @@
+  lado  tarefas           soma   total ms   media ms    mediana     p99 ms     max ms
+   512       64     2897110360     8172,4    127,694      1,506    743,774      743,8
+   128     1024     2897110360     8176,0      7,984      0,075     46,511       46,5
+    32    16384     2897110360     8186,1      0,500      0,005      2,912        3,0
+     8   262144     2897110360     8285,4      0,032      0,000      0,184        6,0
+Blocos gravados em /home/fixo/batchpoint/caracterizacao/mandelbrot_blocos.csv
+(ignorar) 595806

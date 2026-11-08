@@ -1,6 +1,8 @@
 """Fase 12, parte 2: que lote usar na hierárquica, para cada tamanho de tarefa.
 
-Lê as execuções do piloto com o nome "lote" (geradas por scripts/varrer_lote.sh). Para
+Uso: python analise/src/lote.py [piloto|final]   (por omissão: final)
+
+Lê as execuções com o nome "lote" (geradas por scripts/varrer_lote.sh). Para
 cada tamanho de tarefa e cada lote, o tempo é a mediana das repetições medidas. Como os
 tamanhos têm o mesmo trabalho total mas tempos diferentes, o gráfico mostra o tempo
 relativo ao melhor lote desse tamanho (1,0 = o melhor), num só eixo.
@@ -14,7 +16,7 @@ import sys
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 
-from carregar import FIGURAS, carregar
+from carregar import carregar, categoria_dos_argumentos, guardar
 
 NOME = "lote"
 EMPATE = 0.03                    # lotes a menos de 3 % do melhor contam como empatados
@@ -34,10 +36,11 @@ def tamanho(iteracoes):
 
 
 def main():
-    df = carregar("piloto")
+    categoria = categoria_dos_argumentos()
+    df = carregar(categoria)
     df = df[df["ficheiro"].str.endswith(f"_{NOME}.json") & (df["politica"] == "hierarquica")]
     if df.empty:
-        sys.exit(f"Nenhuma execução '{NOME}' da hierárquica em data/piloto/")
+        sys.exit(f"Nenhuma execução '{NOME}' da hierárquica em data/{categoria}/")
 
     med = (df.groupby(["parametro", "lote"])["tempo_s"].median()
              .reset_index().sort_values(["parametro", "lote"]))
@@ -72,10 +75,7 @@ def main():
                  loc="left", fontsize=11, color=TEXTO)
     fig.tight_layout()
 
-    FIGURAS.mkdir(exist_ok=True)
-    saida = FIGURAS / "lote.png"
-    fig.savefig(saida, dpi=200)
-    fig.savefig(saida.with_suffix(".pdf"))
+    saida = guardar(fig, "lote", categoria)
 
     print("Mediana do tempo (s) por lote:")
     for nome, _, _, _, g, _ in escolhas:

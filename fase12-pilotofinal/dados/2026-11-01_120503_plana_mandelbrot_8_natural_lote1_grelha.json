@@ -1,0 +1,32 @@
+{
+  "data": "2026-11-01T12:05:03",
+  "comando": "--politica plana --ligacoes 6 --nome grelha --sensor fixo --carga mandelbrot --lado 8 --lote 1 --categoria piloto --repeticoes 10 --verificar y",
+  "configuracao": {
+    "politica": "plana",
+    "carga": "mandelbrot",
+    "lote": 1,
+    "desequilibrio": "natural",
+    "tarefas": 262144,
+    "parametro": 8,
+    "ligacoes": 6,
+    "aquecimento": 10,
+    "repeticoes_pedidas": 10
+  },
+  "ambiente": {
+    "coordenador": "slx-IdeaPad",
+    "java": "21.0.12.1",
+    "sistema": "Linux 7.0.0-38-generic"
+  },
+  "repeticoes": [
+    {"repeticao": 0, "tempo_ns": 9881518012, "mensagens": 786432, "bytes_enviados": 4456448, "soma_duracoes_ns": 8076301849, "eficiencia": 0.13621898037650074, "temperatura_c": 45.25, "ocupado_ns": [1342253232, 1340596423, 1350111423, 1341844813, 1352084661, 1349411297], "parado_ns": [8539264780, 8540921589, 8531406589, 8539673199, 8529433351, 8532106715]},
+    {"repeticao": 1, "tempo_ns": 9900995303, "mensagens": 786432, "bytes_enviados": 4456448, "soma_duracoes_ns": 8076957810, "eficiencia": 0.13596205167293776, "temperatura_c": 45.5, "ocupado_ns": [1341770904, 1344129437, 1345678509, 1343254445, 1350809887, 1351314628], "parado_ns": [8559224399, 8556865866, 8555316794, 8557740858, 8550185416, 8549680675]},
+    {"repeticao": 2, "tempo_ns": 9875524143, "mensagens": 786432, "bytes_enviados": 4456448, "soma_duracoes_ns": 8074754866, "eficiencia": 0.13627554934596514, "temperatura_c": 45.5, "ocupado_ns": [1340085311, 1345250099, 1343648599, 1340807403, 1355566918, 1349396536], "parado_ns": [8535438832, 8530274044, 8531875544, 8534716740, 8519957225, 8526127607]},
+    {"repeticao": 3, "tempo_ns": 9885994432, "mensagens": 786432, "bytes_enviados": 4456448, "soma_duracoes_ns": 8076376872, "eficiencia": 0.13615856465009993, "temperatura_c": 45.125, "ocupado_ns": [1342709411, 1340655272, 1345467118, 1342728460, 1348788921, 1356027690], "parado_ns": [8543285021, 8545339160, 8540527314, 8543265972, 8537205511, 8529966742]},
+    {"repeticao": 4, "tempo_ns": 9880058663, "mensagens": 786432, "bytes_enviados": 4456448, "soma_duracoes_ns": 8076706743, "eficiencia": 0.13624593096203969, "temperatura_c": 45.375, "ocupado_ns": [1344608760, 1342742085, 1339815742, 1345294005, 1353067897, 1351178254], "parado_ns": [8535449903, 8537316578, 8540242921, 8534764658, 8526990766, 8528880409]},
+    {"repeticao": 5, "tempo_ns": 9877769216, "mensagens": 786432, "bytes_enviados": 4456448, "soma_duracoes_ns": 8076419816, "eficiencia": 0.1362726684434954, "temperatura_c": 45.5, "ocupado_ns": [1344791766, 1339057551, 1344246871, 1341714994, 1355009286, 1351599348], "parado_ns": [8532977450, 8538711665, 8533522345, 8536054222, 8522759930, 8526169868]},
+    {"repeticao": 6, "tempo_ns": 9892850797, "mensagens": 786432, "bytes_enviados": 4456448, "soma_duracoes_ns": 8075977613, "eficiencia": 0.13605747185043018, "temperatura_c": 45.375, "ocupado_ns": [1338950488, 1338727322, 1347984417, 1344800972, 1353899587, 1351614827], "parado_ns": [8553900309, 8554123475, 8544866380, 8548049825, 8538951210, 8541235970]},
+    {"repeticao": 7, "tempo_ns": 9929496364, "mensagens": 786432, "bytes_enviados": 4456448, "soma_duracoes_ns": 8076849890, "eficiencia": 0.13556998250322672, "temperatura_c": 45.375, "ocupado_ns": [1340999217, 1341101115, 1347121260, 1339897878, 1351703647, 1356026773], "parado_ns": [8588497147, 8588395249, 8582375104, 8589598486, 8577792717, 8573469591]},
+    {"repeticao": 8, "tempo_ns": 9891698202, "mensagens": 786432, "bytes_enviados": 4456448, "soma_duracoes_ns": 8078779635, "eficiencia": 0.13612053714171737, "temperatura_c": 45.625, "ocupado_ns": [1340736969, 1337767593, 1345753159, 1349989044, 1352212546, 1352320324], "parado_ns": [8550961233, 8553930609, 8545945043, 8541709158, 8539485656, 8539377878]},
+    {"repeticao": 9, "tempo_ns": 9893653955, "mensagens": 786432, "bytes_enviados": 4456448, "soma_duracoes_ns": 8081583626, "eficiencia": 0.1361408646855522, "temperatura_c": 45.25, "ocupado_ns": [1341998829, 1341958327, 1343821277, 1341740183, 1351818316, 1360246694], "parado_ns": [8551655126, 8551695628, 8549832678, 8551913772, 8541835639, 8533407261]}
+  ]
+}

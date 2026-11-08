@@ -1,0 +1,11 @@
+Soma das iterações de cada lado: 2 897 110 360 (confere)
+Blocos de lado 512: o mais caro tem 9.0% do trabalho; os 8 mais caros, 62%; os 32 mais baratos, 0.7%
+Trabalho por linha de blocos de 512: 0%  1%  15%  34%  34%  15%  1%  0%
+Figura em /home/slx/PersonalProj/batchpoint/analise/figuras/caracterizacao/mandelbrot_mapa.png
+
+ lado  tarefas  tempo total  média/mediana  tarefas c/ 50 % do tempo   c/ 90 %
+  512       64        8.17s             95                     10.9%     21.9%
+  128     1024        8.18s            107                      8.6%     16.0%
+   32    16384        8.19s            108                      8.6%     15.5%
+    8   262144        8.29s             98                      8.5%     15.4%
+Figura em /home/slx/PersonalProj/batchpoint/analise/figuras/caracterizacao/mandelbrot_concentracao.png

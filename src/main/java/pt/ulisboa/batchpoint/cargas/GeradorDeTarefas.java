@@ -40,6 +40,22 @@ public final class GeradorDeTarefas {
                 }
             }
 
+            case "agrupada_fim" -> {
+                //as longas ficam todas no fim da fila
+                int longas = n/ Config.TAREFA_FRACAO_LONGAS;
+
+                long cargaCurta = Math.round(iteracoesMedias/ Config.TAREFA_DIVISOR_CURTA);
+                long cargaLonga = cargaCurta * Config.TAREFA_FATOR_LONGA;
+
+                for(int i=0; i<n; i++){
+                    if(i >= n - longas){
+                        tarefas[i]= new Tarefa(i, cargaLonga);
+                    }else{
+                        tarefas[i]= new Tarefa(i, cargaCurta);
+                    }
+                }
+            }
+
             case "baralhada" -> {
 
                 List<Long> listaCargas = new ArrayList<>();

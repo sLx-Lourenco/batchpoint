@@ -1,0 +1,113 @@
+==================== aquecimento ====================
+Aquecimento sugerido por configuração (tolerância em % do regime):
+    4  ± 1.0%  plana, sintética 5968 it., uniforme
+    9  ± 7.8%  hierarquica, sintética 5968 it., uniforme, lote 100
+    9  ± 0.5%  plana, Mandelbrot lado 128
+    1  ± 1.1%  hierarquica, Mandelbrot lado 128, lote 51
+
+A usar: 9 (o maior). Figura em /home/slx/PersonalProj/batchpoint/analise/figuras/final/aquecimento.png
+
+==================== lote ====================
+Mediana do tempo (s) por lote:
+    10 µs  10: 1.595  25: 0.826  50: 0.609  100: 0.561  250: 0.482  500: 0.439  1000: 0.405  2500: 0.378  5000: 0.388  10000: 0.393
+   100 µs  1: 1.799  5: 0.667  10: 0.526  25: 0.437  50: 0.386  100: 0.366  250: 0.354  500: 0.362  1000: 0.362  2500: 0.385  5000: 0.508
+     1 ms  1: 0.877  5: 0.450  10: 0.359  25: 0.363  50: 0.356  100: 0.358  250: 0.381  500: 0.505
+    10 ms  1: 0.692  5: 0.429  10: 0.358  25: 0.395  50: 0.502
+
+Melhor lote por tamanho (empatados = a menos de 3%):
+    10 µs  lote  2500  (0.378 s)   empatados: [2500, 5000]
+   100 µs  lote   250  (0.354 s)   empatados: [250, 500, 1000]
+     1 ms  lote    50  (0.356 s)   empatados: [10, 25, 50, 100]
+    10 ms  lote    10  (0.358 s)   empatados: [10]
+
+Figura em /home/slx/PersonalProj/batchpoint/analise/figuras/final/lote.png
+
+==================== linhas_base ====================
+Parte 3: base de 1 core (1 nó, 1 thread)
+  carga                                                T1 (s)  cálculo (s)  sistema
+  hierarquica, Mandelbrot lado 512, lote 3              8.070        8.090    -0.2%
+  hierarquica, Mandelbrot lado 128, lote 51             8.184        8.090    +1.2%
+  hierarquica, Mandelbrot lado 32, lote 819             8.447        8.090    +4.4%
+  hierarquica, Mandelbrot lado 8, lote 13107            8.227        8.090    +1.7%
+  hierarquica, sintética 5968208 it., uniforme, lote 10    2.009        2.000    +0.5%
+  hierarquica, sintética 596821 it., uniforme, lote 100    2.012        2.000    +0.6%
+  hierarquica, sintética 59682 it., uniforme, lote 1000    2.026        2.000    +1.3%
+  hierarquica, sintética 5968 it., uniforme, lote 10000    2.091        2.000    +4.6%
+  T1 gravado em /home/slx/PersonalProj/batchpoint/data/final/linhas_base.csv
+
+Parte 4: o mesmo trabalho em cada par de cores (1 nó, 2 threads)
+  cores 0-1: mediana 1.0095 s
+  cores 2-3: mediana 1.0094 s
+  cores 4-5: mediana 1.0120 s
+  diferença entre o mais lento e o mais rápido: 0.26%
+  (traço = mediana) figura em /home/slx/PersonalProj/batchpoint/analise/figuras/final/pares_de_cores.png
+
+==================== grelha ====================
+Desempenho (tempo = mediana [IC 95 %]; sp = speedup; ef = eficiência)
+configuração                       plana                       hierárquica            vencedora
+Mandelbrot lado 8       9.890 [9.851–9.894]   0.8  14%  1.453 [1.448–1.460]   5.7  94%  hierárquica (6.81×)
+Mandelbrot lado 32      1.885 [1.884–1.886]   4.5  72%  1.403 [1.388–1.407]   6.0  99%  hierárquica (1.34×)
+Mandelbrot lado 128     1.379 [1.379–1.380]   5.9  97%  1.509 [1.506–1.511]   5.4  90%  plana (1.09×)
+Mandelbrot lado 512     1.493 [1.489–1.502]   5.4  91%  2.164 [2.157–2.183]   3.7  63%  plana (1.45×)
+10 µs agrupada          6.628 [6.623–6.633]   0.3   5%  0.380 [0.379–0.387]   5.5  89%  hierárquica (17.43×)
+10 µs baralhada         6.648 [6.644–6.650]   0.3   5%  0.393 [0.389–0.394]   5.3  87%  hierárquica (16.94×)
+10 µs uniforme          6.753 [6.748–6.759]   0.3   5%  0.392 [0.389–0.395]   5.3  87%  hierárquica (17.22×)
+100 µs agrupada         0.984 [0.982–0.992]   2.1  34%  0.351 [0.351–0.353]   5.8  95%  hierárquica (2.80×)
+100 µs baralhada        0.929 [0.928–0.930]   2.2  36%  0.363 [0.360–0.363]   5.6  93%  hierárquica (2.56×)
+100 µs uniforme         0.924 [0.923–0.925]   2.2  36%  0.363 [0.362–0.364]   5.6  93%  hierárquica (2.54×)
+1 ms agrupada           0.436 [0.434–0.438]   4.6  77%  0.351 [0.350–0.352]   5.7  96%  hierárquica (1.24×)
+1 ms baralhada          0.412 [0.410–0.413]   4.9  81%  0.365 [0.362–0.366]   5.5  93%  hierárquica (1.13×)
+1 ms uniforme           0.438 [0.437–0.439]   4.6  77%  0.359 [0.357–0.360]   5.6  94%  hierárquica (1.22×)
+10 ms agrupada          0.347 [0.346–0.348]   5.8  96%  0.350 [0.349–0.351]   5.7  96%  plana (1.01×)
+10 ms baralhada         0.366 [0.365–0.367]   5.5  91%  0.403 [0.401–0.404]   5.0  84%  plana (1.10×)
+10 ms uniforme          0.351 [0.351–0.351]   5.7  95%  0.360 [0.358–0.361]   5.6  94%  plana (1.03×)
+
+Comunicação por repetição (mensagens; KB enviados pelo coordenador)
+configuração                          plana          hierárquica
+Mandelbrot lado 8         786432   4352.0 KB        63   3072.1 KB
+Mandelbrot lado 32         49152    272.0 KB        63    192.1 KB
+Mandelbrot lado 128         3072     17.0 KB        63     12.1 KB
+Mandelbrot lado 512          192      1.1 KB        66      0.9 KB
+10 µs agrupada            600000   3320.3 KB        60   2343.8 KB
+10 µs baralhada           600000   3320.3 KB        60   2343.8 KB
+10 µs uniforme            600000   3320.3 KB        60   2343.8 KB
+100 µs agrupada            60000    332.0 KB        60    234.5 KB
+100 µs baralhada           60000    332.0 KB        60    234.5 KB
+100 µs uniforme            60000    332.0 KB        60    234.5 KB
+1 ms agrupada               6000     33.2 KB        60     23.5 KB
+1 ms baralhada              6000     33.2 KB        60     23.5 KB
+1 ms uniforme               6000     33.2 KB        60     23.5 KB
+10 ms agrupada               600      3.3 KB        60      2.4 KB
+10 ms baralhada              600      3.3 KB        60      2.4 KB
+10 ms uniforme               600      3.3 KB        60      2.4 KB
+
+32 configurações, 30–30 repetições cada; temperatura máxima 48.0 °C
+Resumo em /home/slx/PersonalProj/batchpoint/data/final/grelha_resumo.csv
+Figura em /home/slx/PersonalProj/batchpoint/analise/figuras/final/grelha.png
+
+==================== parado ====================
+Fração do tempo a calcular, por ligação (mediana das repetições)
+  Sintética 10 µs: a rede domina     plana         5%   5%   5%   5%   5%   5%
+  Sintética 10 µs: a rede domina     hierarquica  91%  90%  79%
+  Sintética 10 ms, baralhada: a caud plana        98%  92%  90%  89%  89%  89%
+  Sintética 10 ms, baralhada: a caud hierarquica  88%  86%  78%
+  Mandelbrot lado 128: equilíbrio    plana        98%  98%  98%  97%  97%  96%
+  Mandelbrot lado 128: equilíbrio    hierarquica  98%  86%  86%
+  Mandelbrot lado 512: poucas tarefa plana       100%  99%  97%  91%  79%  78%
+  Mandelbrot lado 512: poucas tarefa hierarquica  66%  61%  60%
+Resumo em /home/slx/PersonalProj/batchpoint/data/final/parado_resumo.csv
+Figura em /home/slx/PersonalProj/batchpoint/analise/figuras/final/parado.png
+
+==================== cstates ====================
+Plana com o sono do portátil normal e limitado (mediana do tempo)
+    tarefa    normal  limitado   ganho   custo extra por tarefa
+    100 µs    0.923s    0.924s   -0.1%   0.18 → 0.18 ms
+      1 ms    0.433s    0.439s   -1.4%   0.30 → 0.32 ms
+Resumo em /home/slx/PersonalProj/batchpoint/data/final/cstates_resumo.csv
+
+==================== mandelbrot_mapa ====================
+A calcular as iterações da imagem (só da primeira vez)...
+Soma da imagem: 2 897 110 360 iterações (igual à do Java)
+Blocos de lado 512: o mais caro tem 9.0% do trabalho; os 8 mais caros, 62%; os 32 mais baratos, 0.7%
+Trabalho por linha de blocos de 512: 0%  1%  15%  34%  34%  15%  1%  0%
+Figura em /home/slx/PersonalProj/batchpoint/analise/figuras/caracterizacao/mandelbrot_mapa.png

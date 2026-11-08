@@ -1,0 +1,35 @@
+inicio: 2026-11-08T15:46:43+00:00
+commit: 9d1a4132561488667eb789f6dc78397c0f1bbc76
+
+== portátil (coordenador) ==
+kernel: 7.0.0-42-generic
+CPU(s):                                    16
+CPU(s) MHz de escala:                      35%
+perfil de energia: performance
+openjdk version "21.0.12.1" 2026-08-18
+python: Python 3.12.3
+estados de sono (durante as etapas 3-6 ficam só os de latência <= 2 us):
+  POLL:	Latency: 0
+  C1_ACPI:	Latency: 1
+  C2_ACPI:	Latency: 127
+  C3_ACPI:	Latency: 1048
+
+== torre (nós) ==
+kernel: 6.8.0-147-generic
+Ubuntu 24.04.5 LTS
+Docker version 29.9.2, build a82e528
+CPU(s):                                  16
+Model name:                              AMD Ryzen 7 3700X 8-Core Processor
+Thread(s) per core:                      1
+CPU(s) scaling MHz:                      100%
+SMT ativo: 0
+boost: 0
+governor: performance
+frequência (kHz): 3587678
+batchpoint.slice: 0-5
+system.slice: 6-7
+estados de sono do core 0:
+  POLL: latência 0 us, desativado=0
+  C1: latência 1 us, desativado=0
+  C2: latência 400 us, desativado=1
+fim: 2026-11-08T17:05:15+00:00

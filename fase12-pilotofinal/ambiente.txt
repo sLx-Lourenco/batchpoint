@@ -1,0 +1,127 @@
+inicio: 2026-11-01T11:22:46+00:00
+commit: 9d1a4132561488667eb789f6dc78397c0f1bbc76
+alteracoes por commitar:
+   D data/piloto/2026-10-31_212749_plana_sintetica_5968_uniforme_lote1_aquecimento.json
+   D data/piloto/2026-10-31_212901_hierarquica_sintetica_5968_uniforme_lote100_aquecimento.json
+   D data/piloto/2026-10-31_212927_plana_mandelbrot_128_natural_lote1_aquecimento.json
+   D data/piloto/2026-11-01_094729_hierarquica_sintetica_5968_uniforme_lote10_lote.json
+   D data/piloto/2026-11-01_094905_hierarquica_sintetica_5968208_uniforme_lote50_lote.json
+   D data/piloto/2026-11-01_094939_hierarquica_sintetica_5968208_uniforme_lote1_lote.json
+   D data/piloto/2026-11-01_095020_hierarquica_sintetica_59682_uniforme_lote5_lote.json
+   D data/piloto/2026-11-01_095110_hierarquica_sintetica_596821_uniforme_lote1_lote.json
+   D data/piloto/2026-11-01_095203_hierarquica_sintetica_5968_uniforme_lote5000_lote.json
+   D data/piloto/2026-11-01_095233_hierarquica_sintetica_5968_uniforme_lote250_lote.json
+   D data/piloto/2026-11-01_095308_hierarquica_sintetica_596821_uniforme_lote250_lote.json
+   D data/piloto/2026-11-01_095337_hierarquica_sintetica_596821_uniforme_lote50_lote.json
+   D data/piloto/2026-11-01_095404_hierarquica_sintetica_5968_uniforme_lote10000_lote.json
+   D data/piloto/2026-11-01_095434_hierarquica_sintetica_59682_uniforme_lote2500_lote.json
+   D data/piloto/2026-11-01_095503_hierarquica_sintetica_596821_uniforme_lote5_lote.json
+   D data/piloto/2026-11-01_095536_hierarquica_sintetica_596821_uniforme_lote10_lote.json
+   D data/piloto/2026-11-01_095604_hierarquica_sintetica_59682_uniforme_lote100_lote.json
+   D data/piloto/2026-11-01_095634_hierarquica_sintetica_59682_uniforme_lote50_lote.json
+   D data/piloto/2026-11-01_095704_hierarquica_sintetica_5968_uniforme_lote500_lote.json
+   D data/piloto/2026-11-01_095737_hierarquica_sintetica_59682_uniforme_lote500_lote.json
+   D data/piloto/2026-11-01_095805_hierarquica_sintetica_5968_uniforme_lote100_lote.json
+   D data/piloto/2026-11-01_095846_hierarquica_sintetica_596821_uniforme_lote100_lote.json
+   D data/piloto/2026-11-01_095913_hierarquica_sintetica_5968_uniforme_lote25_lote.json
+   D data/piloto/2026-11-01_100015_hierarquica_sintetica_596821_uniforme_lote25_lote.json
+   D data/piloto/2026-11-01_100043_hierarquica_sintetica_5968_uniforme_lote2500_lote.json
+   D data/piloto/2026-11-01_100114_hierarquica_sintetica_5968208_uniforme_lote10_lote.json
+   D data/piloto/2026-11-01_100142_hierarquica_sintetica_5968_uniforme_lote50_lote.json
+   D data/piloto/2026-11-01_100231_hierarquica_sintetica_5968_uniforme_lote1000_lote.json
+   D data/piloto/2026-11-01_100302_hierarquica_sintetica_596821_uniforme_lote500_lote.json
+   D data/piloto/2026-11-01_100336_hierarquica_sintetica_59682_uniforme_lote25_lote.json
+   D data/piloto/2026-11-01_100409_hierarquica_sintetica_5968208_uniforme_lote25_lote.json
+   D data/piloto/2026-11-01_100438_hierarquica_sintetica_59682_uniforme_lote250_lote.json
+   D data/piloto/2026-11-01_100506_hierarquica_sintetica_59682_uniforme_lote5000_lote.json
+   D data/piloto/2026-11-01_100540_hierarquica_sintetica_59682_uniforme_lote1_lote.json
+   D data/piloto/2026-11-01_100735_hierarquica_sintetica_59682_uniforme_lote1000_lote.json
+   D data/piloto/2026-11-01_100803_hierarquica_sintetica_5968208_uniforme_lote5_lote.json
+   D data/piloto/2026-11-01_100834_hierarquica_sintetica_59682_uniforme_lote10_lote.json
+   D data/piloto/2026-11-01_102153_hierarquica_sintetica_5968_uniforme_lote10000_base1.json
+   D data/piloto/2026-11-01_102212_hierarquica_sintetica_59682_uniforme_lote1000_base1.json
+   D data/piloto/2026-11-01_102230_hierarquica_sintetica_596821_uniforme_lote100_base1.json
+   D data/piloto/2026-11-01_102247_hierarquica_sintetica_5968208_uniforme_lote10_base1.json
+   D data/piloto/2026-11-01_102305_hierarquica_mandelbrot_512_natural_lote3_base1.json
+   D data/piloto/2026-11-01_102406_hierarquica_mandelbrot_128_natural_lote51_base1.json
+   D data/piloto/2026-11-01_102507_hierarquica_mandelbrot_32_natural_lote819_base1.json
+   D data/piloto/2026-11-01_102610_hierarquica_mandelbrot_8_natural_lote13107_base1.json
+   D data/piloto/2026-11-01_102712_hierarquica_sintetica_596821_uniforme_lote100_nos0.json
+   D data/piloto/2026-11-01_102806_hierarquica_sintetica_596821_uniforme_lote100_nos2.json
+   D data/piloto/2026-11-01_102859_hierarquica_sintetica_596821_uniforme_lote100_nos4.json
+   D data/piloto/2026-11-01_104118_plana_sintetica_5968208_uniforme_lote1_grelha.json
+   D data/piloto/2026-11-01_104138_plana_mandelbrot_128_natural_lote1_grelha.json
+   D data/piloto/2026-11-01_104214_plana_sintetica_59682_agrupada_lote1_grelha.json
+   D data/piloto/2026-11-01_104245_hierarquica_sintetica_5968_agrupada_lote10000_grelha.json
+   D data/piloto/2026-11-01_104301_hierarquica_sintetica_596821_uniforme_lote100_grelha.json
+   D data/piloto/2026-11-01_104316_hierarquica_sintetica_596821_baralhada_lote100_grelha.json
+   D data/piloto/2026-11-01_104332_plana_sintetica_596821_uniforme_lote1_grelha.json
+   D data/piloto/2026-11-01_104354_hierarquica_mandelbrot_512_natural_lote3_grelha.json
+   D data/piloto/2026-11-01_104450_plana_mandelbrot_8_natural_lote1_grelha.json
+   D data/piloto/2026-11-01_104835_plana_sintetica_5968_agrupada_lote1_grelha.json
+   D data/piloto/2026-11-01_105117_hierarquica_sintetica_5968208_uniforme_lote10_grelha.json
+   D data/piloto/2026-11-01_105132_plana_sintetica_59682_baralhada_lote1_grelha.json
+   D data/piloto/2026-11-01_105201_hierarquica_sintetica_5968_baralhada_lote10000_grelha.json
+   D data/piloto/2026-11-01_105218_hierarquica_sintetica_5968208_baralhada_lote10_grelha.json
+   D data/piloto/2026-11-01_105234_hierarquica_sintetica_59682_baralhada_lote1000_grelha.json
+   D data/piloto/2026-11-01_105254_plana_mandelbrot_512_natural_lote1_grelha.json
+   D data/piloto/2026-11-01_105333_hierarquica_sintetica_59682_uniforme_lote1000_grelha.json
+   D data/piloto/2026-11-01_105349_hierarquica_sintetica_596821_agrupada_lote100_grelha.json
+   D data/piloto/2026-11-01_105404_plana_sintetica_596821_baralhada_lote1_grelha.json
+   D data/piloto/2026-11-01_105429_hierarquica_mandelbrot_32_natural_lote819_grelha.json
+   D data/piloto/2026-11-01_105505_plana_sintetica_5968_uniforme_lote1_grelha.json
+   D data/piloto/2026-11-01_105803_hierarquica_mandelbrot_8_natural_lote13107_grelha.json
+   D data/piloto/2026-11-01_105841_plana_sintetica_59682_uniforme_lote1_grelha.json
+   D data/piloto/2026-11-01_105915_hierarquica_mandelbrot_128_natural_lote51_grelha.json
+   D data/piloto/2026-11-01_105958_plana_mandelbrot_32_natural_lote1_grelha.json
+   D data/piloto/2026-11-01_110047_plana_sintetica_596821_agrupada_lote1_grelha.json
+   D data/piloto/2026-11-01_110105_hierarquica_sintetica_59682_agrupada_lote1000_grelha.json
+   D data/piloto/2026-11-01_110120_plana_sintetica_5968208_agrupada_lote1_grelha.json
+   D data/piloto/2026-11-01_110136_hierarquica_sintetica_5968208_agrupada_lote10_grelha.json
+   D data/piloto/2026-11-01_110151_plana_sintetica_5968_baralhada_lote1_grelha.json
+   D data/piloto/2026-11-01_110432_hierarquica_sintetica_5968_uniforme_lote10000_grelha.json
+   D data/piloto/2026-11-01_110448_plana_sintetica_5968208_baralhada_lote1_grelha.json
+   D data/piloto/2026-11-01_111304_plana_sintetica_59682_uniforme_lote1_cstates_normal.json
+   D data/piloto/2026-11-01_111331_plana_sintetica_59682_uniforme_lote1_cstates_limitado.json
+   D data/piloto/2026-11-01_111357_plana_sintetica_596821_uniforme_lote1_cstates_normal.json
+   D data/piloto/2026-11-01_111414_plana_sintetica_596821_uniforme_lote1_cstates_limitado.json
+   D data/piloto/linhas_base.csv
+   M scripts/linhas_base.sh
+   M scripts/sono_limitado.sh
+  ?? data/piloto_2026-11-01_112246/
+  ?? fase12-pilotofinal/
+  ?? scripts/piloto_completo.sh
+perfil de energia: performance
+estados de sono do portatil (limitados a latencia <= 2 us):
+  CPUidle driver: intel_idle
+  CPUidle governor: menu
+  analyzing CPU 14:
+  
+  Number of idle states: 4
+  Available idle states: POLL C1_ACPI C2_ACPI C3_ACPI
+  POLL:
+  Flags/Description: CPUIDLE CORE POLL IDLE
+  Latency: 0
+  Residency: 0
+  Usage: 32729
+  Duration: 2097623
+  C1_ACPI:
+  Flags/Description: ACPI FFH MWAIT 0x0
+  Latency: 1
+  Residency: 1
+  Usage: 18244645
+  Duration: 750246867
+  C2_ACPI (DISABLED) :
+  Flags/Description: ACPI FFH MWAIT 0x21
+  Latency: 127
+  Residency: 381
+  Usage: 3253194
+  Duration: 2169398038
+  C3_ACPI (DISABLED) :
+  Flags/Description: ACPI FFH MWAIT 0x60
+  Latency: 1048
+  Residency: 3144
+  Usage: 7216713
+  Duration: 31793898350
+  
+fim: 2026-11-01T12:17:42+00:00

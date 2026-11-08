@@ -52,7 +52,7 @@ class GeradorDeTarefasTest {
 
     @Test
     void idsSaoAPosicaoESemBuracos() {
-        for (String d : new String[] {"uniforme", "agrupada", "baralhada"}) {
+        for (String d : new String[] {"uniforme", "agrupada", "agrupada_fim", "baralhada"}) {
             Tarefa[] t = gerar(d);
             assertEquals(N, t.length, d);
             for (int i = 0; i < N; i++) {
@@ -65,7 +65,7 @@ class GeradorDeTarefasTest {
     @Test
     void mesmoTrabalhoTotalNasTres() {
         double uniforme = total(gerar("uniforme"));
-        for (String d : new String[] {"agrupada", "baralhada"}) {
+        for (String d : new String[] {"agrupada", "agrupada_fim", "baralhada"}) {
             double diferenca = Math.abs(total(gerar(d)) - uniforme) / uniforme;
             assertTrue(diferenca < 0.001, d + ": diferença de " + (diferenca * 100) + "% no trabalho total");
         }
@@ -73,7 +73,7 @@ class GeradorDeTarefasTest {
 
     @Test
     void zeroTarefasDaArrayVazio() {
-        for (String d : new String[] {"uniforme", "agrupada", "baralhada"}) {
+        for (String d : new String[] {"uniforme", "agrupada", "agrupada_fim", "baralhada"}) {
             assertEquals(0, GeradorDeTarefas.gerar(0, MEDIA, d, SEMENTE).length, d);
         }
     }
@@ -117,6 +117,25 @@ class GeradorDeTarefasTest {
     void agrupadaTemAMediaPedida() {
         double media = (double) total(gerar("agrupada")) / N;
         assertTrue(Math.abs(media - MEDIA) / MEDIA < 0.001, "média " + media + " em vez de " + MEDIA);
+    }
+
+    // ---------- agrupada no fim ----------
+
+    @Test
+    void agrupadaFimTemAsLongasTodasNoFim() {
+        Tarefa[] t = gerar("agrupada_fim");
+        int longas = N / Config.TAREFA_FRACAO_LONGAS;
+        long curta = t[0].parametro();
+        long longa = t[N - 1].parametro();
+        assertEquals(curta * Config.TAREFA_FATOR_LONGA, longa);
+        for (int i = 0; i < N; i++) {
+            assertEquals(i >= N - longas ? longa : curta, t[i].parametro(), "posição " + i);
+        }
+    }
+
+    @Test
+    void agrupadaFimTemAsMesmasTarefasDaAgrupada() {
+        assertArrayEquals(tamanhosOrdenados(gerar("agrupada")), tamanhosOrdenados(gerar("agrupada_fim")));
     }
 
     // ---------- baralhada ----------

@@ -1,0 +1,9 @@
+carga,parametro,desequilibrio,politica,fracoes_ocupadas
+sintetica,5968,uniforme,plana,0.0499,0.0498,0.0494,0.0494,0.0493,0.0493
+sintetica,5968,uniforme,hierarquica,0.9095,0.9013,0.7920
+sintetica,5968208,baralhada,plana,0.9800,0.9215,0.8971,0.8949,0.8933,0.8921
+sintetica,5968208,baralhada,hierarquica,0.8834,0.8605,0.7796
+mandelbrot,128,natural,plana,0.9828,0.9795,0.9776,0.9745,0.9693,0.9643
+mandelbrot,128,natural,hierarquica,0.9838,0.8628,0.8608
+mandelbrot,512,natural,plana,0.9987,0.9911,0.9735,0.9092,0.7870,0.7750
+mandelbrot,512,natural,hierarquica,0.6647,0.6128,0.6021
