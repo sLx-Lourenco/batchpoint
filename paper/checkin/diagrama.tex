@@ -1,0 +1,224 @@
+% Página 3: como o programa funciona (Java). Duas partes:
+%   (a) componentes, threads e objetos partilhados, no coordenador e no nó, e o protocolo;
+%   (b) uma repetição, passo a passo, na plana e na hierárquica.
+\begin{tikzpicture}[
+    font=\scriptsize, >=Stealth,
+    thr/.style={draw=laranja, fill=laranja!9, rounded corners=2pt, align=left, inner sep=3pt,
+                anchor=north west, text width=#1},
+    obj/.style={draw=azul, fill=azul!7, rounded corners=2pt, align=left, inner sep=3pt,
+                anchor=north west, text width=#1},
+    cls/.style={draw=black!55, fill=white, rounded corners=2pt, align=left, inner sep=3pt,
+                anchor=north west, text width=#1},
+    caixa/.style={draw=black!45, rounded corners=4pt, fill=black!2},
+    sub/.style={draw=black!35, rounded corners=3pt, dashed, inner sep=4pt},
+    titulo/.style={font=\small\bfseries, anchor=south west},
+    seta/.style={->, draw=black!75, semithick},
+    sinc/.style={->, draw=azul, semithick},
+    rede/.style={->, draw=black, thick},
+    rot/.style={font=\tiny, text=black!80, fill=white, inner sep=1pt},
+    pas/.style={font=\tiny, text=black!80, align=left},
+    nota/.style={font=\tiny, text=black!80, align=left, fill=white, inner sep=2pt},
+    vida/.style={draw=black!35, dashed},
+    cab/.style={font=\scriptsize\bfseries, align=center, fill=white, draw=black!45,
+                rounded corners=2pt, inner sep=2pt},
+  ]
+  % =====================================================================================
+  % (a) componentes
+  % =====================================================================================
+  \node[font=\normalsize\bfseries, anchor=south west] at (0,0.55)
+    {(a) Componentes, threads e objetos partilhados};
+
+  % ------------------------------------------------------------------ coordenador
+  \node[titulo] at (0.1,0.02) {Coordenador {\normalfont\scriptsize (portátil, 1 JVM)}};
+
+  \node[thr=6.25cm] (main) at (0.2,-0.25) {%
+    \textbf{Coordenador.main} \hfill {\tiny thread principal}\\[1pt]
+    1.\ lê os argumentos (\texttt{Argumentos}, \texttt{Config})\\
+    2.\ \texttt{GeradorDeTarefas.gerar} $\rightarrow$ \texttt{Tarefa[]}\\
+    3.\ checksum sequencial: XOR de \texttt{Carga.executar}\\
+    4.\ aceita $N$ ligações; lança uma \texttt{Ligacao} por ligação\\
+    5.\ por repetição: \texttt{new Repeticao} $\rightarrow$ \texttt{publicar} $\rightarrow$
+        \texttt{latch.await()} $\rightarrow$ verifica (cada tarefa 1 vez; XOR igual ao
+        sequencial) $\rightarrow$ \texttt{RegistoJson.escrever}\\
+    6.\ no fim: \texttt{terminar()} (as ligações enviam \textsc{done})};
+
+  \node[obj=2.8cm] (dist) at ($(main.south west)+(0,-0.8)$) {%
+    \textbf{Distribuidor}\\[1pt]
+    guarda a repetição atual num \texttt{Quadro} (\texttt{synchronized},
+    \texttt{wait}/\texttt{notifyAll})\\[1pt]
+    \texttt{obterTarefas(k)}: reserva $k$ tarefas com \texttt{proxima.getAndAdd(k)}; sem
+    tarefas, espera pela repetição seguinte};
+
+  \node[obj=2.95cm] (rep) at ($(main.south west)+(3.3,-0.8)$) {%
+    \textbf{Repeticao} \hfill {\tiny 1 por repetição}\\[1pt]
+    \texttt{tarefas[]}; \texttt{proxima}: AtomicInteger\\
+    \texttt{latch}: CountDownLatch($n$)\\
+    \texttt{recebidos}: AtomicIntegerArray\\
+    \texttt{checkSum}: AtomicLong (XOR)\\
+    mensagens, bytes e tempo ocupado por ligação: atómicos};
+
+  \path let \p1 = (dist.south), \p2 = (rep.south) in coordinate (baixo1) at (0.2, {min(\y1,\y2)});
+  \node[thr=6.25cm] (lig) at ($(baixo1)+(0,-0.8)$) {%
+    \textbf{Ligacao} $\times N$ \hfill {\tiny 1 thread por ligação (6 na plana, 3 na hierárquica)}\\[1pt]
+    \textsc{hello}: lê o id e as threads do nó\\
+    \textsc{request}($k$) $\rightarrow$ \texttt{obterTarefas(k)} $\rightarrow$ \textsc{tasks}
+    (no fim, \textsc{done})\\
+    \textsc{results}: por resultado, \texttt{recebidos[id]++}, XOR no \texttt{checkSum}, soma
+    o tempo ocupado e só depois \texttt{latch.countDown()}};
+
+  \node[cls=2.8cm] (reg) at ($(lig.south west)+(0,-0.8)$) {%
+    \textbf{RegistoJson}\\[1pt]
+    1 JSON por execução em \texttt{data/<categoria>/}, reescrito a cada repetição};
+  \node[cls=2.95cm] (cfg) at ($(lig.south west)+(3.3,-0.8)$) {%
+    \textbf{Configuracao}\\[1pt]
+    política, carga, lote, desequilíbrio, tarefas, ligações, repetições};
+
+  \draw[sinc] ([xshift=-1.7cm]main.south) -- node[rot, right] {publicar} ([xshift=-1.7cm]main.south |- dist.north);
+  \draw[seta] ([xshift=1.6cm]main.south) -- node[rot, right] {new, \texttt{await}} ([xshift=1.6cm]main.south |- rep.north);
+  \draw[sinc] ([xshift=-1.7cm]lig.north) -- node[rot, right] {obterTarefas($k$)} ([xshift=-1.7cm]lig.north |- dist.south);
+  \draw[sinc] ([xshift=1.6cm]lig.north) -- node[rot, right] {\texttt{countDown}} ([xshift=1.6cm]lig.north |- rep.south);
+  \draw[seta] ([xshift=-1.7cm]lig.south) -- node[rot, right] {escrever} ([xshift=-1.7cm]lig.south |- reg.north);
+
+  % ------------------------------------------------------------------ nó
+  \node[titulo] at (10.8,0.02) {Nó $\times 3$ {\normalfont\scriptsize (torre, 1 JVM por contentor, 2 cores)}};
+
+  \node[thr=6.25cm] (agente) at (10.9,-0.25) {%
+    \textbf{AgenteNo.main} \hfill {\tiny thread principal}\\[1pt]
+    lê \texttt{--modo}, \texttt{--threads}, \texttt{--lote}, \texttt{--carga}\\
+    \texttt{FabricaCargas.criar} $\rightarrow$ \texttt{Carga} (\texttt{Sintetica} ou \texttt{Mandelbrot})\\
+    liga ao coordenador (tenta até a porta abrir)\\
+    plana $\rightarrow$ \texttt{NoPlano}; hierárquica $\rightarrow$ \texttt{NoHierarquico}};
+
+  \node[thr=5.95cm] (np) at ($(agente.south west)+(0.15,-1.05)$) {%
+    \textbf{thread de trabalho} $\times 2$, cada uma com o seu \texttt{Canal}\\[1pt]
+    \textsc{hello}; ciclo: \textsc{request}(1) $\rightarrow$ \textsc{tasks} $\rightarrow$
+    \texttt{Carga.executar} (mede os ns) $\rightarrow$ \textsc{results}; \textsc{done}: termina};
+  \node[font=\scriptsize\bfseries, anchor=south west] (tnp) at ($(np.north west)+(-0.05,0.03)$) {NoPlano};
+  \node[sub, fit=(tnp)(np)] (snp) {};
+
+  \node[thr=5.95cm] (com) at ($(np.south west)+(0,-1.0)$) {%
+    \textbf{thread comunicar} \hfill {\tiny 1 \texttt{Canal} por nó}\\[1pt]
+    \textsc{hello}; ciclo: \textsc{request}($k$) $\rightarrow$ \textsc{tasks} $\rightarrow$
+    \texttt{new LoteLocal} $\rightarrow$ \texttt{publicarNovo} $\rightarrow$
+    \texttt{latch.await()} $\rightarrow$ \textsc{results}\\
+    \textsc{done} (ou erro): publica \texttt{POISON} no \texttt{finally}};
+  \node[font=\scriptsize\bfseries, anchor=south west] (tnh) at ($(com.north west)+(-0.05,0.03)$) {NoHierarquico};
+  \node[obj=5.95cm] (lote) at ($(com.south west)+(0,-0.8)$) {%
+    \textbf{Quadro<LoteLocal>} + \textbf{LoteLocal} \hfill {\tiny partilhado no nó}\\[1pt]
+    \texttt{tarefas} do lote; \texttt{proxima}: AtomicInteger; \texttt{latch}: CountDownLatch($k$);
+    \texttt{resultados}: \texttt{synchronizedList}};
+  \node[thr=5.95cm] (calc) at ($(lote.south west)+(0,-0.8)$) {%
+    \textbf{thread calcular} $\times 2$\\[1pt]
+    \texttt{proxima.getAndIncrement()} $\rightarrow$ \texttt{Carga.executar} $\rightarrow$
+    \texttt{resultados.add} $\rightarrow$ \texttt{latch.countDown()}\\
+    sem tarefas: espera no \texttt{Quadro} (\texttt{wait}); \texttt{POISON}: termina};
+  \node[sub, fit=(tnh)(com)(lote)(calc)] (snh) {};
+
+  \draw[seta] ([xshift=2.2cm]agente.south) -- ([xshift=2.2cm]agente.south |- snp.north);
+  \draw[sinc] ([xshift=-1.5cm]com.south) -- node[rot, right] {publicarNovo (\texttt{notifyAll})} ([xshift=-1.5cm]com.south |- lote.north);
+  \draw[sinc] ([xshift=-1.5cm]calc.north) -- node[rot, right] {\texttt{getAndIncrement}, \texttt{countDown}} ([xshift=-1.5cm]calc.north |- lote.south);
+
+  % ------------------------------------------------------------------ molduras (mesma altura)
+  \path let \p1 = (cfg.south), \p2 = (reg.south), \p3 = (snh.south) in
+    coordinate (fundo) at (0, {min(\y1, \y2, \y3) - 0.25cm});
+  \begin{scope}[on background layer]
+    \fill[black!2, draw=black!45, rounded corners=4pt] (0,0) rectangle (6.9,0 |- fundo);
+    \fill[black!2, draw=black!45, rounded corners=4pt] (10.7,0) rectangle (17.6,0 |- fundo);
+  \end{scope}
+
+  % ------------------------------------------------------------------ protocolo
+  \node[font=\scriptsize\bfseries, anchor=north] at (8.8,-0.25) {Protocolo};
+  \node[anchor=north, font=\tiny, align=left, inner sep=0pt] at (8.8,-0.7) {%
+    \begin{tabular}{@{}l@{\,}l@{\,}l@{}}
+      \textsc{hello}   & n$\rightarrow$c & id, threads\\
+      \textsc{request} & n$\rightarrow$c & $k$ (máx.\ de tarefas)\\
+      \textsc{tasks}   & c$\rightarrow$n & $n \times$ (id, parâm.)\\
+      \textsc{results} & n$\rightarrow$c & $n \times$ (id, valor, ns)\\
+      \textsc{done}    & c$\rightarrow$n & ---\\
+    \end{tabular}};
+  \node[anchor=north, font=\tiny, text=black!75, align=center, text width=3.5cm] at (8.8,-2.65) {%
+    1 byte de tipo + inteiros binários.\\[2pt]
+    \textbf{Canal}: \texttt{DataInput/OutputStream} com \emph{buffer}, sobre TCP sem Nagle
+    (\texttt{TCP\_NODELAY}).\\[4pt]
+    O nó envia os resultados \emph{antes} do pedido seguinte: os dois lados nunca esperam um
+    pelo outro ao mesmo tempo, por isso não há \emph{deadlock}.};
+
+  % mensagens entre a Ligacao e o nó, à altura da Ligacao
+  \foreach \i/\t/\d in {0/{\textsc{hello}(id, threads)}/<-, 1/{\textsc{request}($k$)}/<-,
+                         2/{\textsc{tasks}($n \times$ tarefa)}/->, 3/{\textsc{results}($n \times$ resultado)}/<-,
+                         4/{\textsc{done}}/->}{
+    \draw[\d, thick] ($(6.9,0 |- lig.north)+(0,-0.25-0.4*\i)$) -- node[font=\tiny, above=-1.6pt] {\t}
+                     ($(10.7,0 |- lig.north)+(0,-0.25-0.4*\i)$);
+  }
+  \node[font=\tiny, text=black!70, align=center, text width=3.6cm, anchor=north]
+    at ($(8.8,0 |- lig.north)+(0,-2.25)$)
+    {TCP pelo switch Gigabit, portátil $\leftrightarrow$ torre.\\ Na plana, o outro lado é cada
+     thread de trabalho; na hierárquica, a thread comunicar.};
+
+  % =====================================================================================
+  % (b) uma repetição
+  % =====================================================================================
+  \coordinate (B) at ($(fundo)+(0,-0.9)$);
+  \begin{scope}[shift={(B)}]
+  \node[font=\normalsize\bfseries, anchor=south west] at (0,0.1) {(b) Uma repetição, passo a passo};
+
+  % ------------------------------------------------------------------ plana
+  \node[font=\scriptsize\bfseries, anchor=west] at (0,-0.25) {Plana: 1 tarefa por pedido};
+  \foreach \x/\n in {0.8/main, 3.7/Ligacao, 7.6/{thread do nó}}{
+    \node[cab] at (\x,-0.75) {\n};
+    \draw[vida] (\x,-1.0) -- (\x,-6.3);
+  }
+  \draw[sinc] (0.8,-1.35) -- node[rot, above] {publicar(rep)} (3.7,-1.35);
+  \draw[rede] (7.6,-1.9) -- node[rot, above] {\textsc{request}(1)} (3.7,-1.9);
+  \node[pas, anchor=east] at (3.65,-2.25) {\texttt{getAndAdd(1)}};
+  \draw[rede] (3.7,-2.6) -- node[rot, above] {\textsc{tasks}(1 tarefa)} (7.6,-2.6);
+  \node[pas, anchor=east] at (7.55,-2.95) {\texttt{Carga.executar}};
+  \draw[rede] (7.6,-3.5) -- node[rot, above] {\textsc{results}(1)} (3.7,-3.5);
+  \node[pas, anchor=east] at (3.65,-3.85) {\texttt{countDown()}};
+  \draw[decorate, decoration={brace, amplitude=3pt}, draw=black!60] (7.95,-1.7) -- (7.95,-4.0)
+    node[midway, right=2pt, pas] {por\\tarefa};
+  \node[nota, text width=3.5cm, anchor=north] at (5.65,-4.3) {repete para cada tarefa, nas 6
+    threads ao mesmo tempo: 3 mensagens e 1 ida e volta na rede por tarefa};
+  \draw[sinc] (3.7,-5.75) -- node[rot, above] {latch = 0} (0.8,-5.75);
+  \node[pas, anchor=west] at (0.85,-6.1) {verifica e regista};
+
+  % ------------------------------------------------------------------ hierárquica
+  \node[font=\scriptsize\bfseries, anchor=west] at (9.0,-0.25) {Hierárquica: $k$ tarefas por pedido};
+  \foreach \x/\n in {9.6/main, 11.9/Ligacao, 14.4/comunicar, 16.85/{calcular $\times$2}}{
+    \node[cab] at (\x,-0.75) {\n};
+    \draw[vida] (\x,-1.0) -- (\x,-6.3);
+  }
+  \draw[sinc] (9.6,-1.35) -- node[rot, above] {publicar(rep)} (11.9,-1.35);
+  \draw[rede] (14.4,-1.9) -- node[rot, above] {\textsc{request}($k$)} (11.9,-1.9);
+  \node[pas, anchor=east] at (11.85,-2.25) {\texttt{getAndAdd(k)}};
+  \draw[rede] (11.9,-2.6) -- node[rot, above] {\textsc{tasks}($k$ tarefas)} (14.4,-2.6);
+  \draw[sinc] (14.4,-3.0) -- node[rot, above] {publicarNovo} (16.85,-3.0);
+  \node[pas, anchor=east, align=right] at (16.8,-3.45) {\texttt{getAndIncrement},
+    \texttt{executar},\\\texttt{countDown} ($\approx k/2$ por thread)};
+  \draw[sinc] (16.85,-4.15) -- node[rot, above] {latch = 0} (14.4,-4.15);
+  \draw[rede] (14.4,-4.6) -- node[rot, above] {\textsc{results}($k$)} (11.9,-4.6);
+  \node[pas, anchor=east] at (11.85,-4.95) {$k\times$\texttt{countDown()}};
+  \draw[decorate, decoration={brace, amplitude=3pt}, draw=black!60] (17.25,-1.7) -- (17.25,-5.05)
+    node[midway, right=2pt, pas] {por\\lote};
+  \node[nota, text width=4.4cm, anchor=north] at (14.4,-5.15) {repete para cada lote, nos 3 nós:
+    3 mensagens por lote; o nó só pede o lote seguinte quando as 2 threads acabam o atual};
+  \draw[sinc] (11.9,-5.75) -- node[rot, above] {latch = 0} (9.6,-5.75);
+  \node[pas, anchor=west] at (9.65,-6.1) {verifica e regista};
+
+  % ------------------------------------------------------------------ legenda
+  \begin{scope}[shift={(0,-6.75)}]
+    \node[thr=1.0cm, minimum height=0.32cm] at (0,0) {};
+    \node[pas, anchor=west] at (1.25,-0.17) {thread};
+    \node[obj=1.0cm, minimum height=0.32cm] at (2.4,0) {};
+    \node[pas, anchor=west] at (3.65,-0.17) {objeto partilhado entre threads};
+    \node[cls=1.0cm, minimum height=0.32cm] at (7.1,0) {};
+    \node[pas, anchor=west] at (8.35,-0.17) {classe};
+    \draw[rede] (9.4,-0.17) -- (10.3,-0.17);
+    \node[pas, anchor=west] at (10.35,-0.17) {mensagem TCP};
+    \draw[sinc] (12.3,-0.17) -- (13.2,-0.17);
+    \node[pas, anchor=west] at (13.25,-0.17) {sincronização em memória};
+    \draw[seta] (15.9,-0.17) -- (16.6,-0.17);
+    \node[pas, anchor=west] at (16.65,-0.17) {chamada};
+  \end{scope}
+  \end{scope}
+\end{tikzpicture}

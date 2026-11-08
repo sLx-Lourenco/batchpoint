@@ -1,0 +1,220 @@
+%%
+%% Progress check-in (11 Nov 2026) do projeto de PPC.
+%% Página 1: introdução, ambiente e método. Página 2: resultados. Página 3: o programa (Java).
+%%
+\documentclass[sigplan]{acmart}
+\settopmatter{printacmref=false}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage[portuguese]{babel}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=*}
+\usepackage{tikz}
+\usetikzlibrary{positioning,fit,backgrounds,arrows.meta,calc,decorations.pathreplacing}
+\definecolor{azul}{HTML}{2A78D6}
+\definecolor{laranja}{HTML}{EB6834}
+
+\raggedbottom
+\setlength{\emergencystretch}{1.5em}
+\begin{document}
+
+\title{Check-in: Distribuição de Tarefas Plana vs.\ Hierárquica num Pequeno Cluster Emulado}
+
+\author{Gonçalo Lourenço}
+\affiliation{%
+ \institution{Programação Paralela e Concorrente, Faculdade de Ciências, Universidade de Lisboa}}
+\email{fc68092@alunos.ciencias.ulisboa.pt}
+
+\pagestyle{plain}
+\maketitle
+
+% Fica no topo da página 2.
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{figuras/paper_grelha}
+  \caption{Speedup ($T_1/T_6$): mediana e IC a 95\% (bootstrap; quase sempre menor do que o
+  ponto). A carga sintética com cada desequilíbrio e o Mandelbrot; a tracejado, o ideal.}
+  \label{fig:grelha}
+\end{figure*}
+
+\section{Introdução}
+
+Num sistema mestre--trabalhador distribuído, um coordenador reparte tarefas independentes
+por nós ligados em rede. Comparo duas formas de o fazer:
+\begin{itemize}
+  \item \textbf{plana}: cada thread de cada nó pede ao coordenador uma tarefa de cada vez;
+  \item \textbf{hierárquica}: um gestor em cada nó pede um lote de $k$ tarefas e reparte-o
+        pelas threads do nó.
+\end{itemize}
+A plana equilibra melhor a carga, mas paga uma ida e volta na rede por tarefa. A hierárquica
+paga uma por lote, mas pode deixar threads paradas quando os lotes custam tempos diferentes.
+Meço, num cluster de 3 nós com 2 cores cada, em que tamanhos de tarefa e desequilíbrios de
+carga cada uma é mais rápida. Testo três hipóteses:
+\begin{itemize}
+  \item \textbf{H1}: com tarefas pequenas, a hierárquica é mais rápida;
+  \item \textbf{H2}: com tarefas grandes e carga desequilibrada, a plana é mais rápida;
+  \item \textbf{H3}: há um ponto de cruzamento, que se desloca para tarefas mais pequenas
+        quando o desequilíbrio aumenta.
+\end{itemize}
+Implementei as duas políticas de raiz em Java 21, sobre TCP (o programa está na Fig.~\ref{fig:diagrama}, na página~3).
+
+\section{Ambiente experimental}
+
+\noindent\textbf{Torre (os 3 nós).}
+\begin{itemize}
+  \item AMD Ryzen 7 3700X (8 cores), 32\,GB, Ubuntu Server 24.04, kernel 6.8.
+  \item 3,6\,GHz fixos; SMT, \emph{boost} e o estado de sono C2 (400\,$\mu$s) desligados.
+  \item Cada nó é um contentor Docker 29.9 com uma JVM, preso a 2 cores: nó 1 nos cores
+        0--1, nó 2 nos 2--3, nó 3 nos 4--5.
+  \item O sistema fica nos cores 6--7 (cgroups).
+  \item Java 21 (Temurin), heap fixo de 512\,MB, \emph{Serial GC}.
+\end{itemize}
+
+\smallskip
+\noindent\textbf{Portátil (o coordenador).}
+\begin{itemize}
+  \item Intel Core i7-13620H, 16\,GB, kernel 7.0, OpenJDK 21.0.12.
+  \item Gera as tarefas, distribui-as, verifica os resultados e grava os dados; não calcula.
+  \item Perfil \emph{performance} e sono do CPU limitado a 2\,$\mu$s de latência; Wi-Fi e
+        atualizações desligados durante as medições.
+  \item Ligado à torre por um switch Gigabit: ida e volta de 120\,$\mu$s (mediana), 941\,Mbit/s.
+\end{itemize}
+
+\section{Como medi}
+
+\noindent\textbf{Cargas.} \emph{Sintética}: um ciclo \emph{xorshift64} sobre inteiros, sem
+memória, calibrado na torre (1,6755\,ns por iteração). Tarefas de 10\,$\mu$s, 100\,$\mu$s,
+1, 2, 5, 10 e 100\,ms, com 2,4\,s de trabalho por repetição (12\,s nos 100\,ms). Quatro
+desequilíbrios, todos com o mesmo trabalho total:
+\begin{itemize}
+  \item \emph{uniforme}: todas as tarefas iguais;
+  \item \emph{agrupada no início} e \emph{no fim}: 10\% das tarefas 10$\times$ mais longas,
+        seguidas no início ou no fim da fila;
+  \item \emph{baralhada}: as mesmas 10\%, em posições aleatórias.
+\end{itemize}
+\emph{Mandelbrot}: 4096$\times$4096 píxeis, até 1000 iterações, em blocos de lado 8, 32,
+128 e 512. O desequilíbrio é natural: medi cada bloco num core e 15 a 22\% dos blocos levam
+90\% do tempo.
+
+\smallskip
+\noindent\textbf{Repetições.} Corri 50 repetições seguidas em 4 configurações: a maior queda
+(JIT) dá-se nas 3 primeiras. Descarto 10 e meço 30 (20 nos 100\,ms). Na grelha não sobra
+deriva: entre as primeiras e as últimas 10 repetições medidas, a variação mediana é de $-$0,07\%.
+
+\smallskip
+\noindent\textbf{Lote.} Na hierárquica, $k$ = tarefas/24: 24 lotes por repetição, 8 por nó.
+Com 20 lotes, um nó ficava com 7 e outro com 6, e a hierárquica nunca passava de 95\% de
+eficiência. Varri $k$ de 1 a 10\,000 em 4 tamanhos: a regra fica sempre a menos de 3\% do
+melhor lote.
+
+\smallskip
+\noindent\textbf{Linha de base.} $T_1$ é a mesma carga com 1 nó de 1 thread, pelo mesmo
+caminho (Docker, rede, coordenador); o speedup é $T_1/T_6$. O caminho custa 0,1 a 4,7\% em
+relação ao cálculo puro.
+
+\smallskip
+\noindent\textbf{Controlo.} As 64 configurações correm por ordem aleatória, numa só sessão de
+2 horas. Em cada repetição verifico que cada tarefa chegou uma vez e que o XOR dos resultados
+iguala o sequencial. Os 3 pares de cores diferem 0,26\%; a torre não passou de 49\,$^\circ$C.
+
+\smallskip
+\noindent\textbf{Estatística.} Só 21 das 64 amostras passam no Shapiro-Wilk, por isso comparo
+as políticas com Mann-Whitney U e correção de Holm (32 comparações), e meço o efeito com o
+$\delta$ de Cliff e a razão das medianas.
+
+% ------------------------------------------------------------------ página 2
+\newpage
+\section{Resultados}
+
+\begin{table}[t]
+  \caption{Razão das medianas plana/hierárquica ($>1$: a hierárquica é mais rápida).
+  $p_{\text{Holm}} < 0{,}01$ em todas, exceto *. $\dagger$: lote ímpar.}
+  \label{tab:razao}
+  \scriptsize
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{@{}lrrrr@{}}
+    \toprule
+    Tarefa & Uniforme & Agr.\ início & Agr.\ fim & Baralhada \\
+    \midrule
+    10\,$\mu$s  & 17,6  & 17,5  & 15,7  & 17,8 \\
+    100\,$\mu$s & 2,65  & 2,77  & 2,50  & 2,65 \\
+    1\,ms       & 1,27  & 1,23  & 1,13  & 1,13 \\
+    2\,ms       & 1,12  & 1,09  & 1,00* & 1,02 \\
+    5\,ms       & 1,02  & 1,01  & 0,92  & 0,91 \\
+    10\,ms      & 0,99  & 0,98  & 0,90  & 0,89 \\
+    100\,ms     & 0,83$\dagger$ & 0,84$\dagger$ & 0,74$\dagger$ & 0,71$\dagger$ \\
+    \midrule
+    \multicolumn{5}{@{}l}{Mandelbrot, lado 8 / 32 / 128 / 512: \;6,58 / 1,27 / 0,92 / 0,70$\dagger$} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\noindent\textbf{H1: confirmada} (Fig.~\ref{fig:grelha}, Tab.~\ref{tab:razao}). Com 10\,$\mu$s,
+a hierárquica é 15,7 a 17,8$\times$ mais rápida; com 1\,ms, ainda 1,13 a 1,27$\times$. A causa
+é o número de mensagens: com 10\,$\mu$s, a plana troca 720\,000 por repetição e a hierárquica
+72, para um volume parecido (4,0 vs.\ 2,8\,MB). As threads da plana passam 95\% do tempo à
+espera (Fig.~\ref{fig:parado}).
+
+\smallskip
+\noindent\textbf{H2: confirmada.} Com 5 e 10\,ms e as longas no fim ou baralhadas, a plana é
+1,09 a 1,13$\times$ mais rápida ($\delta = -1$); no Mandelbrot de lado 128, 1,09$\times$. O
+mecanismo vê-se na Fig.~\ref{fig:parado}: com as longas no fim, os 2 últimos lotes são
+pesados e prendem 2 nós, enquanto o terceiro fica 34\% do tempo parado. A plana reparte essas
+tarefas uma a uma e mantém as 6 threads a 97\%. Com as longas \emph{no início}, os lotes
+pesados saem primeiro e os leves preenchem o fim: as duas políticas quase empatam.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figuras/paper_cruzamento}
+  \caption{Razão plana/hierárquica entre 1 e 100\,ms. Traço: o cruzamento (interpolado em
+  log-log); barra: o seu IC a 95\% (bootstrap).}
+  \label{fig:cruzamento}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.9\columnwidth]{figuras/paper_parado}
+  \caption{Fração do tempo a calcular, por thread (plana) ou por nó (hierárquica), da mais à
+  menos ocupada.}
+  \label{fig:parado}
+\end{figure}
+
+\smallskip
+\noindent\textbf{H3: confirmada} (Fig.~\ref{fig:cruzamento}). O cruzamento fica nos 7,5\,ms
+com a carga uniforme [IC 6,6--9,1], e desce para 5,9\,ms com as longas no início [5,7--6,4],
+2,4\,ms com as baralhadas [2,2--2,4] e 2,0\,ms com as longas no fim [1,9--2,1]. Os ICs dos
+três desequilíbrios não tocam no da uniforme.
+
+\smallskip
+\noindent\textbf{Lote ímpar ($\dagger$).} Nos 100\,ms, o lote de 5 tarefas para 2 threads
+deixa uma thread parada no fim de cada lote: 83\% de eficiência mesmo na uniforme (o mecanismo
+da H2, isolado). O efeito é igual nos 4 desequilíbrios, por isso comparo-os entre si: face à
+uniforme, a hierárquica fica 1,12$\times$ mais lenta com as longas no fim e 1,22$\times$ com as
+baralhadas. O lado 512 tem o mesmo efeito (lote de 3).
+
+\smallskip
+\noindent\textbf{Ameaças.} Os nós partilham a cache L3; o JIT varia 1--2\% entre arranques
+da JVM. \textbf{Próximo passo.} Política hierárquica com \emph{work stealing} entre nós,
+medida na mesma grelha.
+
+\smallskip
+\noindent\textbf{Uso de IA.} Usei o Claude (Anthropic) no apoio ao código, nos scripts de
+execução e de análise e na redação.
+
+% ------------------------------------------------------------------ página 3
+\clearpage
+\begin{figure*}[p]
+  \centering
+  \resizebox{0.93\textwidth}{!}{\input{diagrama}}
+  \caption{O programa. (a) No coordenador, a thread principal publica cada repetição num
+  \texttt{Quadro}; cada \texttt{Ligacao} (uma thread por ligação TCP) reserva tarefas com uma
+  operação atómica e devolve os resultados, que descontam a \emph{latch} da repetição. No nó,
+  a plana tem uma ligação por thread; a hierárquica tem uma thread que comunica e duas que
+  calculam, ligadas por um \texttt{LoteLocal} partilhado. (b) A diferença entre as políticas
+  está no número de tarefas por pedido: a plana troca 3 mensagens por tarefa, a hierárquica
+  3 por lote.}
+  \label{fig:diagrama}
+\end{figure*}
+
+\end{document}
