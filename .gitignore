@@ -3,9 +3,9 @@ target/
 *.class
 
 # Python
-.venv/
-analise/.venv/
-__pycache__/
+*.venv/
+*analise/.venv/
+*__pycache__/
 *.pyc
 
 # arquivos
