@@ -1,3 +1,12 @@
 target/
 .vscode/
 *.class
+
+# Python
+.venv/
+analise/.venv/
+__pycache__/
+*.pyc
+
+# arquivos
+*.zip
